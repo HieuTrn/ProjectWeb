@@ -3,7 +3,7 @@ window.onload = function () {
 
 	// Thêm hình vào banner
 	addBanner("img/banners/banner0.gif", "img/banners/banner0.gif");
-	var numBanner = 9; // Số lượng hình banner
+	var numBanner = 1; // Số lượng hình banner
 	for (var i = 1; i <= numBanner; i++) {
 		var linkimg = "img/banners/banner" + i + ".png";
 		addBanner(linkimg, linkimg);
@@ -25,15 +25,8 @@ window.onload = function () {
 	autocomplete(document.getElementById('search-box'), list_products);
 
 	// thêm tags (từ khóa) vào khung tìm kiếm
-	var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
+	var tags = ["Mac", "iPad", "iPhone", "Watch", "Vision", "AirPods"];
 	for (var t of tags) addTags(t, "index.html?search=" + t);
-
-	// Thêm danh sách hãng điện thoại
-	var company = ["Apple.jpg", "Samsung.jpg", "Oppo.jpg", "Nokia.jpg", "Huawei.jpg", "Xiaomi.png",
-		"Realme.png", "Vivo.jpg", "Philips.jpg", "Mobell.jpg", "Mobiistar.jpg", "Itel.jpg",
-		"Coolpad.png", "HTC.jpg", "Motorola.jpg"
-	];
-	for (var c of company) addCompany("img/company/" + c, c.slice(0, c.length - 4));
 
 	// Thêm sản phẩm vào trang
 	var sanPhamPhanTich
@@ -59,12 +52,11 @@ window.onload = function () {
 
 		// Thêm các khung sản phẩm
 		var div = document.getElementsByClassName('contain-khungSanPham')[0];
-		addKhungSanPham('NỔI BẬT NHẤT', yellow_red, ['star=3', 'sort=rateCount-decrease'], soLuong, div);
-		addKhungSanPham('SẢN PHẨM MỚI', blue, ['promo=moiramat', 'sort=rateCount-decrease'], soLuong, div);
-		addKhungSanPham('TRẢ GÓP 0%', yellow_red, ['promo=tragop', 'sort=rateCount-decrease'], soLuong, div);
-		addKhungSanPham('GIÁ SỐC ONLINE', green, ['promo=giareonline', 'sort=rateCount-decrease'], soLuong, div);
-		addKhungSanPham('GIẢM GIÁ LỚN', yellow_red, ['promo=giamgia'], soLuong, div);
-		addKhungSanPham('GIÁ RẺ CHO MỌI NHÀ', green, ['price=0-3000000', 'sort=price'], soLuong, div);
+		addKhungSanPham('iPhone', yellow_red, ['company=iPhone'], soLuong, div);
+		addKhungSanPham('iPad', blue, ['company=iPad'], soLuong, div);
+		addKhungSanPham('Mac', yellow_red, ['company=Mac'], soLuong, div);
+		addKhungSanPham('Apple Watch', green, ['company=Apple Watch'], soLuong, div);
+		addKhungSanPham('AirPods', yellow_red, ['company=AirPods'], soLuong, div);
 	}
 
 	// Thêm chọn mức giá
