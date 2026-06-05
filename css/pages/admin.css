@@ -192,6 +192,21 @@ header h2 {
 .table-content td i.fa-check:hover { color: var(--mau-thanh-cong); }
 .table-content td i.fa-remove:hover { color: var(--mau-canh-bao); }
 
+.donhang .table-content td:last-child {
+    white-space: nowrap;
+}
+
+.donhang .table-content td:last-child .tooltip {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 var(--kc-xxs);
+    vertical-align: middle;
+}
+
 .table-footer {
     padding: var(--kc-md);
     background-color: var(--mau-nen);
