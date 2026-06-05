@@ -23,7 +23,10 @@
 }
 
 .rowdetail {
-    display: block;
+    display: flex;
+    flex-wrap: wrap; /* Cho phép rớt dòng nếu màn hình quá nhỏ */
+    align-items: flex-start; /* Các cột tự do chiều cao, không bị kéo dãn trừ khi có nội dung */
+    gap: 20px; /* Khoảng cách an toàn giữa 3 cột thay cho margin */
     border-top: 1px solid #e5e5e5;
     padding: 15px 0;
     margin-top: 5px;
@@ -106,12 +109,12 @@
 }
 
 .picture {
-    float: left;
+    flex: 1; /* Thay thế cho width: 33% */
+    min-width: 280px; /* Ngăn chặn việc cột bị bóp quá nhỏ */
     overflow: hidden;
-    width: 33%;
     position: relative;
-    /*định vị trí phụ thuộc vào thành phần bao ngoài*/
     display: block;
+    box-sizing: border-box;
 }
 
 .picture img {
@@ -124,28 +127,28 @@
 }
 
 .price_sale {
-    float: left;
+    flex: 1; /* Thay thế cho width: 33% */
+    min-width: 280px;
     position: relative;
-    width: 33%;
     display: block;
+    box-sizing: border-box;
 }
 
 .area_price {
     display: block;
-    overflow: hidden;
-    line-height: 20px;
+    line-height: normal;
     padding: 0 10px 10px;
 }
 
 .area_price strong {
     display: inline-block;
-    /*hối nội tuyến*/
-    overflow: hidden;
+
     font-size: 24px;
     color: #e10c00;
     vertical-align: middle;
     /*thành phần sẽ đc canh giữa theo thành phần bao ngoài*/
     margin-right: 10px;
+    line-height: 1.2;
 }
 
 .area_price span {
@@ -323,11 +326,12 @@
 }
 
 .info_product {
-    width: 33%;
+    flex: 1; /* Thay thế cho width: 33% */
+    min-width: 280px;
     border: 1px solid #ddd;
-    float: left;
     border-radius: 3px;
     display: block;
+    box-sizing: border-box;
 }
 
 .info_product h2 {
