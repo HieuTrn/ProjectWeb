@@ -86,7 +86,6 @@ function dangKyRoutes(router) {
             const product = await themSanPham(req.body);
             guiThanhCong(res, product);
         } catch (loi) {
-            console.error('Add product error:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi thêm sản phẩm', 400);
         }
     });
@@ -106,7 +105,6 @@ function dangKyRoutes(router) {
             const product = await suaSanPham(masp, req.body);
             guiThanhCong(res, product);
         } catch (loi) {
-            console.error('Update product error:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi sửa sản phẩm', 400);
         }
     });
@@ -126,7 +124,6 @@ function dangKyRoutes(router) {
             await xoaSanPham(masp);
             guiThanhCong(res, { message: 'Xóa sản phẩm thành công' });
         } catch (loi) {
-            console.error('Delete product error:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi xóa sản phẩm', 400);
         }
     });

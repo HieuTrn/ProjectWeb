@@ -49,7 +49,6 @@ function dangKyRoutes(router) {
             const gioHang = await themVaoGioHang(user._id, masp, soLuongInt);
             guiThanhCong(res, gioHang);
         } catch (loi) {
-            console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi thêm vào giỏ hàng', 400);
         }
     });
@@ -68,7 +67,6 @@ function dangKyRoutes(router) {
             const gioHang = await capNhatSoLuong(user._id, masp, soLuongInt);
             guiThanhCong(res, gioHang);
         } catch (loi) {
-            console.error('Lỗi khi cập nhật số lượng sản phẩm:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi cập nhật số lượng', 400);
         }
     });
@@ -86,7 +84,6 @@ function dangKyRoutes(router) {
             const gioHang = await xoaKhoiGioHang(user._id, masp);
             guiThanhCong(res, gioHang);
         } catch (loi) {
-            console.error('Lỗi khi xóa sản phẩm khỏi giỏ hàng:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi xóa sản phẩm', 400);
         }
     });

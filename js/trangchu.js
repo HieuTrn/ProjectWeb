@@ -55,7 +55,7 @@ window.onload = () => taiSanPhamVaChay(() => {
 		addKhungSanPham('iPhone', yellow_red, ['company=iPhone'], soLuong, div);
 		addKhungSanPham('iPad', blue, ['company=iPad'], soLuong, div);
 		addKhungSanPham('Mac', yellow_red, ['company=Mac'], soLuong, div);
-		addKhungSanPham('Apple Watch', green, ['company=Apple Watch'], soLuong, div);
+		addKhungSanPham('Apple Watch', green, ['company=Watch'], soLuong, div);
 		addKhungSanPham('AirPods', yellow_red, ['company=AirPods'], soLuong, div);
 	}
 

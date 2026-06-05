@@ -12,7 +12,8 @@ select {
     border-color: var(--mau-vien);
     border-radius: var(--bo-pill);
     color: var(--mau-den);
-    background-color: var(--mau-nen);
+    background-color: var(--mau-kinh-nhe);
+    backdrop-filter: var(--blur-kinh);
     transition: border-color var(--chuyen-dong-nhanh), box-shadow var(--chuyen-dong-nhanh), background-color var(--chuyen-dong-nhanh);
 }
 
@@ -26,8 +27,10 @@ select {
     width: min(420px, 100%);
     height: 44px;
     margin: 0;
-    border: 1px solid var(--mau-vien-ro);
-    background: var(--mau-nen);
+    border: 1px solid var(--vien-kinh);
+    background: var(--mau-kinh);
+    box-shadow: var(--bong-noi-nhe);
+    backdrop-filter: var(--blur-kinh);
     overflow: visible;
 }
 
@@ -50,10 +53,11 @@ select {
     height: 36px;
     min-height: 36px;
     padding: 0 var(--kc-sm);
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: var(--bo-pill);
     color: #ffffff;
-    background: var(--mau-chinh);
+    background: linear-gradient(135deg, rgba(0, 113, 227, 0.92), rgba(0, 102, 204, 0.78));
+    box-shadow: 0 8px 18px rgba(0, 102, 204, 0.22);
     font-size: var(--chu-caption);
     font-weight: 600;
     cursor: pointer;
@@ -63,7 +67,7 @@ select {
 .input-search button:hover,
 .input-search button:focus-visible {
     color: #ffffff;
-    background: var(--mau-chinh-focus);
+    background: linear-gradient(135deg, rgba(0, 113, 227, 1), rgba(41, 151, 255, 0.86));
 }
 
 .filterName input {
@@ -98,10 +102,12 @@ select:focus {
 .overlayTable button,
 table button {
     min-height: 44px;
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: var(--bo-pill);
     color: #ffffff;
-    background: var(--mau-chinh);
+    background: linear-gradient(135deg, rgba(0, 113, 227, 0.92), rgba(0, 102, 204, 0.76));
+    box-shadow: 0 10px 22px rgba(0, 102, 204, 0.18);
+    backdrop-filter: var(--blur-kinh);
     font-size: var(--chu-caption);
     font-weight: 400;
     letter-spacing: -0.01em;
@@ -119,7 +125,8 @@ table button {
 .overlayTable button:hover,
 table button:hover {
     color: #ffffff;
-    background: var(--mau-chinh-focus);
+    background: linear-gradient(135deg, rgba(0, 113, 227, 1), rgba(41, 151, 255, 0.86));
+    box-shadow: 0 14px 28px rgba(0, 102, 204, 0.24);
 }
 
 .dropdown {
@@ -149,11 +156,11 @@ table button:hover {
     left: 0;
     z-index: 20;
     min-width: 170px;
-    border: 1px solid var(--mau-vien);
+    border: 1px solid var(--vien-kinh);
     border-radius: var(--bo-lg);
-    background-color: rgba(255, 255, 255, 0.94);
-    box-shadow: var(--bong-noi-nhe);
-    backdrop-filter: saturate(180%) blur(20px);
+    background-color: var(--mau-kinh);
+    box-shadow: var(--bong-kinh);
+    backdrop-filter: var(--blur-kinh);
     transform: scaleY(0);
     transform-origin: top;
     opacity: 0;
@@ -200,16 +207,18 @@ table button:hover {
     width: 238px;
     min-height: 430px;
     margin: 10px;
-    border: 1px solid var(--mau-vien);
+    border: 1px solid var(--vien-kinh);
     border-radius: var(--bo-lg);
-    background: var(--mau-nen);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.62));
     overflow: visible;
-    transition: border-color var(--chuyen-dong-vua), transform var(--chuyen-dong-vua), box-shadow var(--chuyen-dong-vua);
+    box-shadow: 0 12px 34px rgba(29, 29, 31, 0.08);
+    backdrop-filter: var(--blur-kinh);
+    transition: border-color var(--chuyen-dong-vua), transform var(--chuyen-dong-vua), box-shadow var(--chuyen-dong-vua), background-color var(--chuyen-dong-vua);
 }
 
 .sanPham:hover {
-    border-color: var(--mau-vien-ro);
-    box-shadow: var(--bong-noi-nhe);
+    border-color: rgba(255, 255, 255, 0.82);
+    box-shadow: var(--bong-kinh);
     transform: translateY(-2px);
 }
 
@@ -318,19 +327,24 @@ table button:hover {
 }
 
 .sanPham label.giamgia {
-    background-image: linear-gradient(90deg, #ff9c00, #ec1f1f);
+    background-image: linear-gradient(90deg, rgba(255, 156, 0, 0.92), rgba(236, 31, 31, 0.86));
+    box-shadow: 0 8px 18px rgba(236, 31, 31, 0.18);
+    backdrop-filter: var(--blur-kinh);
 }
 
 .sanPham label.tragop {
-    background: #f28902;
+    background: rgba(242, 137, 2, 0.84);
+    backdrop-filter: var(--blur-kinh);
 }
 
 .sanPham label.giareonline {
-    background: #3fb846;
+    background: rgba(63, 184, 70, 0.84);
+    backdrop-filter: var(--blur-kinh);
 }
 
 .sanPham label.moiramat {
-    background: #1191f8;
+    background: rgba(17, 145, 248, 0.84);
+    backdrop-filter: var(--blur-kinh);
 }
 
 .fa-bolt {
@@ -359,19 +373,21 @@ table button:hover {
     width: 44px;
     height: 44px;
     min-height: 44px;
-    border: 1px solid var(--mau-vien);
+    border: 1px solid rgba(255, 255, 255, 0.36);
     border-radius: var(--bo-pill);
     color: #ffffff;
-    background: var(--mau-chinh);
+    background: linear-gradient(145deg, rgba(0, 113, 227, 0.92), rgba(0, 102, 204, 0.70));
     font-size: 20px;
     cursor: pointer;
+    box-shadow: 0 12px 28px rgba(0, 102, 204, 0.26);
+    backdrop-filter: var(--blur-kinh);
     transition: background-color var(--chuyen-dong-nhanh), transform var(--chuyen-dong-nhanh), box-shadow var(--chuyen-dong-nhanh);
 }
 
 .themvaogio:hover {
     color: #ffffff;
-    background: var(--mau-chinh-focus);
-    box-shadow: var(--bong-noi-nhe);
+    background: linear-gradient(145deg, rgba(0, 113, 227, 1), rgba(41, 151, 255, 0.84));
+    box-shadow: 0 16px 32px rgba(0, 102, 204, 0.30);
 }
 
 .tooltip .tooltiptext {
@@ -410,9 +426,11 @@ table button:hover {
 }
 
 .khungSanPham {
-    border: 1px solid var(--mau-vien);
+    border: 1px solid var(--vien-kinh);
     border-radius: var(--bo-lg);
-    background: var(--mau-nen-phu);
+    background: rgba(255, 255, 255, 0.42);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), var(--bong-noi-nhe);
+    backdrop-filter: var(--blur-kinh);
     overflow: visible;
 }
 
@@ -420,7 +438,10 @@ table button:hover {
     padding: var(--kc-sm) var(--kc-lg);
     border-radius: var(--bo-pill);
     color: var(--mau-den);
-    background: var(--mau-nen) !important;
+    background: var(--mau-kinh) !important;
+    border: 1px solid var(--vien-kinh);
+    box-shadow: var(--bong-noi-nhe);
+    backdrop-filter: var(--blur-kinh);
 }
 
 .xemTatCa {
@@ -431,7 +452,7 @@ table button:hover {
     margin: var(--kc-lg) auto 0;
     padding: 8px 16px;
     color: #ffffff;
-    background: var(--mau-chinh);
+    background: linear-gradient(135deg, rgba(0, 113, 227, 0.92), rgba(0, 102, 204, 0.74));
 }
 
 .chitietSanpham {
@@ -449,10 +470,11 @@ table button:hover {
     margin: var(--kc-xl) auto;
     border-radius: var(--bo-lg);
     overflow: hidden;
-    background: var(--mau-nen);
+    background: var(--mau-kinh);
     border-collapse: separate;
     border-spacing: 0;
-    box-shadow: var(--bong-noi-nhe);
+    box-shadow: var(--bong-kinh);
+    backdrop-filter: var(--blur-kinh);
 }
 
 .listSanPham th {
@@ -460,7 +482,7 @@ table button:hover {
 }
 
 .listSanPham tr:last-child {
-    background-color: var(--mau-nen-phu);
+    background-color: rgba(255, 255, 255, 0.52);
 }
 
 .thanhtoan,
@@ -496,10 +518,12 @@ table button:hover {
 .tools-member i {
     padding: 10px;
     border-radius: 50%;
-    border: 1px solid var(--mau-vien-ro);
-    background-color: var(--mau-nen);
+    border: 1px solid var(--vien-kinh);
+    background-color: var(--mau-kinh);
     color: var(--mau-den);
-    transition: background-color var(--chuyen-dong-nhanh), color var(--chuyen-dong-nhanh), border-color var(--chuyen-dong-nhanh);
+    box-shadow: var(--bong-noi-nhe);
+    backdrop-filter: var(--blur-kinh);
+    transition: background-color var(--chuyen-dong-nhanh), color var(--chuyen-dong-nhanh), border-color var(--chuyen-dong-nhanh), box-shadow var(--chuyen-dong-nhanh);
 }
 
 .tools-member .fa-user {
@@ -527,9 +551,10 @@ table button:hover {
     left: 0;
     text-align: center;
     border-radius: var(--bo-md);
-    background-color: var(--mau-nen);
-    border: 1px solid var(--mau-vien);
-    box-shadow: var(--bong-noi-nhe);
+    background-color: var(--mau-kinh);
+    border: 1px solid var(--vien-kinh);
+    box-shadow: var(--bong-kinh);
+    backdrop-filter: var(--blur-kinh);
     min-width: 170px;
     transition: transform var(--chuyen-dong-nhanh), opacity var(--chuyen-dong-nhanh), visibility var(--chuyen-dong-nhanh);
     transform: translateX(-40%) scale(0.9);
@@ -582,10 +607,11 @@ table button:hover {
 
 .autocomplete-items {
     position: absolute;
-    border: 1px solid var(--mau-vien);
+    border: 1px solid var(--vien-kinh);
     border-radius: var(--bo-md);
-    box-shadow: var(--bong-noi-nhe);
-    background-color: var(--mau-nen);
+    box-shadow: var(--bong-kinh);
+    background-color: var(--mau-kinh);
+    backdrop-filter: var(--blur-kinh);
     z-index: 99;
     top: 105%;
     left: 0;
@@ -597,7 +623,7 @@ table button:hover {
     padding: 10px var(--kc-md);
     cursor: pointer;
     color: var(--mau-den);
-    background-color: var(--mau-nen);
+    background-color: rgba(255, 255, 255, 0.66);
     border-bottom: 1px solid var(--mau-vien);
     font-size: var(--chu-caption);
 }
@@ -607,7 +633,7 @@ table button:hover {
 }
 
 .autocomplete-items div:hover {
-    background-color: var(--mau-nen-phu);
+    background-color: rgba(255, 255, 255, 0.82);
     color: var(--mau-chinh);
 }
 
@@ -644,8 +670,8 @@ table button:hover {
     inset: 0;
     overflow-y: auto;
     z-index: 1000;
-    background: rgba(29, 29, 31, 0.4);
-    backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(29, 29, 31, 0.34);
+    backdrop-filter: var(--blur-kinh);
     transition: transform var(--chuyen-dong-vua);
     transform: scale(0);
 }
@@ -660,24 +686,26 @@ table button:hover {
     height: 44px;
     line-height: 44px;
     text-align: center;
-    color: var(--mau-chu-phu);
+    color: #ffffff;
     cursor: pointer;
     border-radius: var(--bo-pill);
-    background: rgba(29, 29, 31, 0.04);
+    background: var(--mau-kinh-dam);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     transition: background-color var(--chuyen-dong-nhanh), color var(--chuyen-dong-nhanh);
 }
 
 .containTaikhoan .close:hover {
-    color: var(--mau-den);
-    background-color: rgba(29, 29, 31, 0.08);
+    color: #ffffff;
+    background-color: rgba(29, 29, 31, 0.90);
 }
 
 .taikhoan {
     position: relative;
     z-index: 1001;
-    background: var(--mau-nen);
-    border: 1px solid var(--mau-vien);
-    box-shadow: var(--bong-noi-nhe);
+    background: var(--mau-kinh);
+    border: 1px solid var(--vien-kinh);
+    box-shadow: var(--bong-kinh);
+    backdrop-filter: var(--blur-kinh);
     border-radius: var(--bo-lg);
     padding: 40px;
     max-width: 600px;

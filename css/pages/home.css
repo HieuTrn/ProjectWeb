@@ -88,6 +88,11 @@
 .khungSanPham {
     margin: 64px 0;
     padding: var(--kc-xl) var(--kc-md) var(--kc-lg);
+    border-color: var(--vien-kinh) !important;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.34)),
+        radial-gradient(circle at 18% 0%, rgba(0, 113, 227, 0.10), transparent 34%);
+    box-shadow: var(--bong-kinh);
 }
 
 .khungSanPham h3.tenKhung {
@@ -100,24 +105,23 @@
     padding: 0 var(--kc-xl);
     transform: none;
     color: var(--mau-den) !important;
-    background: var(--mau-nen) !important;
-    border: 1px solid var(--mau-vien);
+    background: var(--mau-kinh) !important;
+    border: 1px solid var(--vien-kinh);
+    border-radius: var(--bo-pill);
     box-shadow: var(--bong-noi-nhe);
+    backdrop-filter: var(--blur-kinh);
+    font-family: var(--font-hien-thi);
+    font-size: var(--chu-tagline);
+    font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
-.khungSanPham:nth-of-type(even) {
-    background: var(--mau-den);
-}
-
-.khungSanPham:nth-of-type(even) .tenKhung {
-    color: var(--mau-den);
-    background: var(--mau-nen) !important;
-}
-
-.khungSanPham:nth-of-type(even) .xemTatCa {
-    color: var(--mau-chinh-dark);
-    background: transparent;
-    border-color: var(--mau-chinh-dark) !important;
+.khungSanPham .xemTatCa {
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(0, 113, 227, 0.92), rgba(0, 102, 204, 0.74));
+    border: 1px solid rgba(255, 255, 255, 0.30) !important;
+    border-radius: var(--bo-pill);
+    box-shadow: var(--bong-noi-nhe);
 }
 
 .listSpTrongKhung {

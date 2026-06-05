@@ -40,7 +40,6 @@ function dangKyRoutes(router) {
             const user = await dangKy({ username, pass, ho, ten, email });
             guiThanhCong(res, user);
         } catch (loi) {
-            console.error('Register error:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi đăng ký', 400);
         }
     });
@@ -55,7 +54,6 @@ function dangKyRoutes(router) {
             const cookieString = `session_id=${sessionId}; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400`;
             guiThanhCong(res, user, 200, { 'Set-Cookie': cookieString });
         } catch (loi) {
-            console.error('Login error:', loi);
             guiLoi(res, 'UNAUTHORIZED', loi.message || 'Lỗi đăng nhập', 401);
         }
     });
@@ -113,7 +111,6 @@ function dangKyRoutes(router) {
             const user = await capNhatTrangThaiKhoaAdmin(username, off);
             guiThanhCong(res, user);
         } catch (loi) {
-            console.error('Toggle status error:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi cập nhật trạng thái', 400);
         }
     });
@@ -131,7 +128,6 @@ function dangKyRoutes(router) {
             await xoaKhachHangAdmin(username);
             guiThanhCong(res, { success: true });
         } catch (loi) {
-            console.error('Delete customer error:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi xóa người dùng', 400);
         }
     });
@@ -147,7 +143,6 @@ function dangKyRoutes(router) {
             const updatedUser = await capNhatThongTinCaNhan(user._id, { ho, ten, email });
             guiThanhCong(res, updatedUser);
         } catch (loi) {
-            console.error('Update profile error:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi cập nhật thông tin', 400);
         }
     });
@@ -166,7 +161,6 @@ function dangKyRoutes(router) {
             await doiMatKhau(user._id, passCu, passMoi);
             guiThanhCong(res, null);
         } catch (loi) {
-            console.error('Change password error:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi đổi mật khẩu', 400);
         }
     });

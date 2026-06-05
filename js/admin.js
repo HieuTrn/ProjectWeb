@@ -76,7 +76,7 @@ async function addThongKe() {
     if (!tc1 || !tc2) return;
 
     try {
-        const response = await fetch('http://localhost:3000/api/admin/stats', {
+        const response = await fetch('/api/admin/stats', {
             credentials: 'include'
         });
         const result = await response.json();
@@ -158,12 +158,13 @@ function addTableProducts() {
         s += `<tr>
             <td style="width: 5%">` + (i+1) + `</td>
             <td style="width: 10%">` + p.masp + `</td>
-            <td style="width: 40%">
+            <td style="width: 35%">
                 <a title="Xem chi tiết" target="_blank" href="chitietsanpham.html?masp=` + encodeURIComponent(p.masp) + `">` + p.name + `</a>
                 <img src="` + p.img + `"></img>
             </td>
             <td style="width: 15%">` + p.price + `</td>
-            <td style="width: 15%">` + promoToStringValue(p.promo) + `</td>
+            <td style="width: 10%">` + (p.stock ?? 0) + `</td>
+            <td style="width: 10%">` + promoToStringValue(p.promo) + `</td>
             <td style="width: 15%">
                 <div class="tooltip">
                     <i class="fa fa-wrench" onclick="addKhungSuaSanPham('` + p.masp + `')"></i>
@@ -211,22 +212,25 @@ function layThongTinSanPhamTuTable(id) {
     var masp = tr[1].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
     var name = tr[2].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
     var company = tr[3].getElementsByTagName('td')[1].getElementsByTagName('select')[0].value;
-    var img = tr[4].getElementsByTagName('td')[1].getElementsByTagName('img')[0].src;
+    var img = tr[4].getElementsByTagName('td')[1].getElementsByTagName('img')[0].getAttribute('src') || '';
     var price = tr[5].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
-    var star = tr[6].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
-    var rateCount = tr[7].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
-    var promoName = tr[8].getElementsByTagName('td')[1].getElementsByTagName('select')[0].value;
-    var promoValue = tr[9].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var coDongSoLuong = tr[6].getElementsByTagName('td')[0].textContent.indexOf('Số lượng') >= 0;
+    var doLechDong = coDongSoLuong ? 1 : 0;
+    var stock = coDongSoLuong ? tr[6].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value : undefined;
+    var star = tr[6 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var rateCount = tr[7 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var promoName = tr[8 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('select')[0].value;
+    var promoValue = tr[9 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
 
-    var screen = tr[11].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
-    var os = tr[12].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
-    var camara = tr[13].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
-    var camaraFront = tr[14].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
-    var cpu = tr[15].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
-    var ram = tr[16].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
-    var rom = tr[17].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
-    var microUSB = tr[18].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
-    var battery = tr[19].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var screen = tr[11 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var os = tr[12 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var camara = tr[13 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var camaraFront = tr[14 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var cpu = tr[15 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var ram = tr[16 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var rom = tr[17 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var microUSB = tr[18 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
+    var battery = tr[19 + doLechDong].getElementsByTagName('td')[1].getElementsByTagName('input')[0].value;
 
     if(isNaN(price)) {
         alert('Giá phải là số nguyên');
@@ -243,11 +247,16 @@ function layThongTinSanPhamTuTable(id) {
         return false;
     }
 
+    if(coDongSoLuong && isNaN(stock)) {
+        alert('Số lượng phải là số nguyên');
+        return false;
+    }
+
     try {
-        return {
+        var sanPham = {
             "name": name,
             "company": company,
-            "img": previewSrc,
+            "img": previewSrc || img,
             "price": numToString(Number.parseInt(price, 10)),
             "star": Number.parseInt(star, 10),
             "rateCount": Number.parseInt(rateCount, 10),
@@ -268,6 +277,12 @@ function layThongTinSanPhamTuTable(id) {
             },
             "masp" : masp
         }
+
+        if(coDongSoLuong) {
+            sanPham.stock = Number.parseInt(stock, 10);
+        }
+
+        return sanPham;
     } catch(e) {
         alert('Lỗi: ' + e.toString());
         return false;
@@ -278,7 +293,7 @@ async function themSanPham() {
     if(!newSp) return;
 
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/admin/products', {
+        const phanHoi = await fetch('/api/admin/products', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -302,7 +317,7 @@ async function themSanPham() {
 async function xoaSanPham(masp, tensp) {
     if (window.confirm('Bạn có chắc muốn xóa ' + tensp)) {
         try {
-            const phanHoi = await fetch('http://localhost:3000/api/admin/products?masp=' + masp, {
+            const phanHoi = await fetch('/api/admin/products?masp=' + masp, {
                 method: 'DELETE',
                 credentials: 'include'
             });
@@ -326,7 +341,7 @@ async function suaSanPham(masp) {
     if(!sp) return;
 
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/admin/products?masp=' + masp, {
+        const phanHoi = await fetch('/api/admin/products?masp=' + masp, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -373,7 +388,7 @@ function addKhungSuaSanPham(masp) {
             <td>
                 <select>`
                     
-    var company = ["Mac", "iPad", "iPhone", "Watch", "Vision", "Airpods"];
+    var company = ["Mac", "iPad", "iPhone", "Watch", "Vision", "AirPods"];
     for(var c of company) {
         if(sp.company == c)
             s += (`<option value="`+c+`" selected>`+c+`</option>`);
@@ -394,6 +409,10 @@ function addKhungSuaSanPham(masp) {
         <tr>
             <td>Giá tiền (số nguyên):</td>
             <td><input type="text" value="`+stringToNum(sp.price)+`"></td>
+        </tr>
+        <tr>
+            <td>Số lượng:</td>
+            <td><input type="number" min="0" value="`+(sp.stock ?? 100)+`"></td>
         </tr>
         <tr>
             <td>Số sao (số nguyên 0->5):</td>
@@ -503,7 +522,8 @@ function getValueOfTypeInTable_SanPham(tr, loai) {
         case 'masp' : return td[1].innerHTML.toLowerCase();
         case 'ten' : return td[2].innerHTML.toLowerCase();
         case 'gia' : return stringToNum(td[3].innerHTML);
-        case 'khuyenmai' : return td[4].innerHTML.toLowerCase();
+        case 'soluong' : return Number(td[4].innerHTML);
+        case 'khuyenmai' : return td[5].innerHTML.toLowerCase();
     }
     return false;
 }
@@ -515,7 +535,7 @@ async function addTableDonHang() {
     var s = `<table class="table-outline hideImg">`;
 
     try {
-        const response = await fetch('http://localhost:3000/api/admin/orders', {
+        const response = await fetch('/api/admin/orders', {
             credentials: 'include'
         });
         const result = await response.json();
@@ -567,7 +587,7 @@ async function addTableDonHang() {
 
 async function duyet(maDonHang, duyetDon) {
     try {
-        const response = await fetch('http://localhost:3000/api/admin/orders/status', {
+        const response = await fetch('/api/admin/orders/status', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -653,7 +673,7 @@ async function addTableKhachHang() {
     var s = `<table class="table-outline hideImg">`;
 
     try {
-        const response = await fetch('http://localhost:3000/api/admin/users', {
+        const response = await fetch('/api/admin/users', {
             credentials: 'include'
         });
         const result = await response.json();
@@ -720,7 +740,7 @@ function openThemNguoiDung() {
 async function voHieuHoaNguoiDung(inp, taikhoan) {
     let value = !inp.checked;
     try {
-        const response = await fetch('http://localhost:3000/api/admin/users/status', {
+        const response = await fetch('/api/admin/users/status', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -745,7 +765,7 @@ async function voHieuHoaNguoiDung(inp, taikhoan) {
 async function xoaNguoiDung(taikhoan) {
     if(window.confirm('Xác nhận xóa '+taikhoan+'? \nMọi dữ liệu về '+taikhoan+' sẽ mất! Bao gồm cả những đơn hàng của '+taikhoan)) {
         try {
-            const response = await fetch('http://localhost:3000/api/admin/users?username=' + encodeURIComponent(taikhoan), {
+            const response = await fetch('/api/admin/users?username=' + encodeURIComponent(taikhoan), {
                 method: 'DELETE',
                 credentials: 'include'
             });

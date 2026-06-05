@@ -18,7 +18,7 @@ window.onload = () => taiSanPhamVaChay(async () => {
 
 async function taiGioHangTuApi() {
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/cart', {
+        const phanHoi = await fetch('/api/cart', {
             credentials: 'include'
         });
         const ketQua = await phanHoi.json();
@@ -124,7 +124,7 @@ function addProductToTable() {
 async function xoaSanPhamTrongGioHang(masp) {
     if (window.confirm('Xác nhận hủy mua')) {
         try {
-            const phanHoi = await fetch('http://localhost:3000/api/cart/remove?masp=' + masp, {
+            const phanHoi = await fetch('/api/cart/remove?masp=' + masp, {
                 method: 'DELETE',
                 credentials: 'include'
             });
@@ -159,7 +159,7 @@ async function thanhToan() {
             : Date.now().toString() + Math.random().toString(36).substring(2);
 
         try {
-            const phanHoi = await fetch('http://localhost:3000/api/orders/checkout', {
+            const phanHoi = await fetch('/api/orders/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
@@ -184,7 +184,7 @@ async function xoaHet() {
     if (dsCartItems.length) {
         if (window.confirm('Bạn có chắc chắn muốn xóa hết sản phẩm trong giỏ !!')) {
             try {
-                const phanHoi = await fetch('http://localhost:3000/api/cart/clear', {
+                const phanHoi = await fetch('/api/cart/clear', {
                     method: 'DELETE',
                     credentials: 'include'
                 });
@@ -207,7 +207,7 @@ async function capNhatSoLuongFromInput(inp, masp) {
     if (!soLuongMoi || soLuongMoi <= 0) soLuongMoi = 1;
 
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/cart/update', {
+        const phanHoi = await fetch('/api/cart/update', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -231,7 +231,7 @@ async function tangSoLuong(masp) {
     const soLuongMoi = item.soluong + 1;
 
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/cart/update', {
+        const phanHoi = await fetch('/api/cart/update', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -256,7 +256,7 @@ async function giamSoLuong(masp) {
     const soLuongMoi = item.soluong - 1;
 
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/cart/update', {
+        const phanHoi = await fetch('/api/cart/update', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',

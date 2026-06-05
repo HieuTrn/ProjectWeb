@@ -26,7 +26,7 @@ window.onload = () => taiSanPhamVaChay(async () => {
 
 async function taiVaHienThiDonHang(user) {
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/orders', {
+        const phanHoi = await fetch('/api/orders', {
             credentials: 'include'
         });
         const ketQua = await phanHoi.json();
@@ -147,7 +147,7 @@ async function changePass() {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/users/password', {
+        const response = await fetch('/api/users/password', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -188,7 +188,7 @@ async function changeInfo(iTag, info) {
         };
 
         try {
-            const response = await fetch('http://localhost:3000/api/users/profile', {
+            const response = await fetch('/api/users/profile', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
@@ -270,7 +270,7 @@ function addDonHang(dh) {
                 <tr>
                     <td>` + (i + 1) + `</td>
                     <td class="noPadding imgHide">
-                        <a target="_blank" href="chitietsanpham.html?` + item.name.split(' ').join('-') + `" title="Xem chi tiết">
+                        <a target="_blank" href="chitietsanpham.html?masp=` + encodeURIComponent(item.masp) + `" title="Xem chi tiết">
                             ` + item.name + `
                             <img src="` + item.img + `">
                         </a>

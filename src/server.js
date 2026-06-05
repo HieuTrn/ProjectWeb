@@ -168,7 +168,7 @@ async function khoiDongServer() {
         process.on('SIGINT', dungServer);
         process.on('SIGTERM', dungServer);
     } catch (loi) {
-        console.error('Không thể khởi động hệ thống.');
+        console.error('Không thể khởi động hệ thống.', loi);
         process.exit(1);
     }
 }

@@ -101,14 +101,9 @@ function phanTich_URL_chiTietSanPham() {
     hinh.src = duongDanAnh;
     document.getElementById('bigimg').src = duongDanAnh;
 
-    // Hình nhỏ
-    addSmallImg("img/products/huawei-mate-20-pro-green-600x600.jpg");
-    addSmallImg("img/chitietsanpham/oppo-f9-mau-do-1-org.jpg");
-    addSmallImg("img/chitietsanpham/oppo-f9-mau-do-2-org.jpg");
-    addSmallImg("img/chitietsanpham/oppo-f9-mau-do-3-org.jpg");
-    addSmallImg("img/products/huawei-mate-20-pro-green-600x600.jpg");
-    addSmallImg("img/chitietsanpham/oppo-f9-mau-do-3-org.jpg");
-    addSmallImg("img/products/huawei-mate-20-pro-green-600x600.jpg");
+    for (var i = 0; i < 5; i++) {
+        addSmallImg(duongDanAnh);
+    }
 
     // Khởi động thư viện hỗ trợ banner - chỉ chạy sau khi tạo xong hình nhỏ
     var owl = $('.owl-carousel');
@@ -253,8 +248,6 @@ function suggestion(){
     .sort((a,b) => b.diem - a.diem)
     // Lấy ra 10 sản phẩm đầu tiên
     .slice(0, 10);
-
-    console.log(sanPhamTuongTu)
 
     // ====== Hiển thị 5 sản phẩm lên web ====== 
     if(sanPhamTuongTu.length) {

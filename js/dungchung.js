@@ -10,7 +10,6 @@ async function taiDanhSachSanPhamTuApi() {
                 ...p,
                 price: numToString(p.price)
             }));
-            console.log('Tải danh sách sản phẩm từ MongoDB thành công.');
         } else {
             list_products = [];
         }
@@ -750,14 +749,6 @@ function shuffleArray(array) {
     return array;
 }
 
-function checkLocalStorage() {
-    if (typeof (Storage) == "undefined") {
-        alert('Máy tính không hỗ trợ LocalStorage. Không thể lưu thông tin sản phẩm, khách hàng!!');
-    } else {
-        console.log('LocaStorage OKE!');
-    }
-}
-
 // Di chuyển lên đầu trang
 function gotoTop() {
     if (window.jQuery) {
@@ -784,129 +775,3 @@ function getRandomColor() {
     return color;
 }
 
-// Test, not finished
-function auto_Get_Database() {
-    var ul = document.getElementsByClassName('homeproduct')[0];
-    var li = ul.getElementsByTagName('li');
-    for (var l of li) {
-        var a = l.getElementsByTagName('a')[0];
-        // name
-        var name = a.getElementsByTagName('h3')[0].innerHTML;
-
-        // price
-        var price = a.getElementsByClassName('price')[0]
-        price = price.getElementsByTagName('strong')[0].innerHTML;
-
-        // img
-        var img = a.getElementsByTagName('img')[0].src;
-        console.log(img);
-
-        // // rating
-        // var rating = a.getElementsByClassName('ratingresult')[0];
-        // var star = rating.getElementsByClassName('icontgdd-ystar').length;
-        // var rateCount = parseInt(rating.getElementsByTagName('span')[0].innerHTML);
-
-        // // promo
-        // var tragop = a.getElementsByClassName('installment');
-        // if(tragop.length) {
-
-        // }
-
-        // var giamgia = a.getElementsByClassName('discount').length;
-        // var giareonline = a.getElementsByClassName('shockprice').length;
-    }
-}
-
-function getThongTinSanPhamFrom_TheGioiDiDong() {
-    javascript: (function () {
-        var s = document.createElement('script');
-        s.innerHTML = `
-			(function () {
-				var ul = document.getElementsByClassName('parameter')[0];
-				var li_s = ul.getElementsByTagName('li');
-				var result = {};
-				result.detail = {};
-	
-				for (var li of li_s) {
-					var loai = li.getElementsByTagName('span')[0].innerText;
-					var giatri = li.getElementsByTagName('div')[0].innerText;
-	
-					switch (loai) {
-						case "Màn hình:":
-							result.detail.screen = giatri.replace('"', "'");
-							break;
-						case "Hệ điều hành:":
-							result.detail.os = giatri;
-							break;
-						case "Camera sau:":
-							result.detail.camara = giatri;
-							break;
-						case "Camera trước:":
-							result.detail.camaraFront = giatri;
-							break;
-						case "CPU:":
-							result.detail.cpu = giatri;
-							break;
-						case "RAM:":
-							result.detail.ram = giatri;
-							break;
-						case "Bộ nhớ trong:":
-							result.detail.rom = giatri;
-							break;
-						case "Thẻ nhớ:":
-							result.detail.microUSB = giatri;
-							break;
-						case "Dung lượng pin:":
-							result.detail.battery = giatri;
-							break;
-					}
-				}
-	
-				console.log(JSON.stringify(result, null, "\t"));
-			})();`;
-        document.body.appendChild(s);
-    })();
-}
-
-// $('.taikhoan').find('input').on('keyup blur focus', function (e) {
-
-//     var $this = $(this),
-//         label = $this.prev('label');
-
-//     if (e.type === 'keyup') {
-//         if ($this.val() === '') {
-//             label.removeClass('active highlight');
-//         } else {
-//             label.addClass('active highlight');
-//         }
-//     } else if (e.type === 'blur') {
-//         if ($this.val() === '') {
-//             label.removeClass('active highlight');
-//         } else {
-//             label.removeClass('highlight');
-//         }
-//     } else if (e.type === 'focus') {
-
-//         if ($this.val() === '') {
-//             label.removeClass('highlight');
-//         } else if ($this.val() !== '') {
-//             label.addClass('highlight');
-//         }
-//     }
-
-// });
-
-// $('.tab a').on('click', function (e) {
-
-//     e.preventDefault();
-
-//     $(this).parent().addClass('active');
-//     $(this).parent().siblings().removeClass('active');
-
-//     target = $(this).attr('href');
-
-//     $('.tab-content > div').not(target).hide();
-
-//     $(target).fadeIn(600);
-
-// });

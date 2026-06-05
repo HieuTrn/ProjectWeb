@@ -100,15 +100,16 @@ header h2 {
     width: 48%;
     margin: 20px 1%;
     padding: var(--kc-md);
-    background: var(--mau-nen);
-    border: 1px solid var(--mau-vien);
+    background: var(--mau-kinh);
+    border: 1px solid var(--vien-kinh);
     border-radius: var(--bo-lg);
-    box-shadow: var(--bong-noi-nhe);
+    box-shadow: var(--bong-kinh);
+    backdrop-filter: var(--blur-kinh);
 }
 
 .table-outline {
     width: 100%;
-    border: 1px solid var(--mau-vien);
+    border: 1px solid var(--vien-kinh);
     border-radius: var(--bo-lg);
     overflow: hidden;
     border-collapse: separate;
@@ -141,11 +142,13 @@ header h2 {
 
 .table-content {
     width: 100%;
-    background: var(--mau-nen);
-    border: 1px solid var(--mau-vien);
+    background: var(--mau-kinh);
+    border: 1px solid var(--vien-kinh);
     border-radius: var(--bo-lg);
     margin: var(--kc-md) 0;
     overflow: hidden;
+    box-shadow: var(--bong-noi-nhe);
+    backdrop-filter: var(--blur-kinh);
 }
 
 .table-content table {
@@ -167,7 +170,7 @@ header h2 {
 }
 
 .table-content tr:nth-of-type(even) {
-    background-color: var(--mau-nen-phu);
+    background-color: rgba(255, 255, 255, 0.46);
 }
 
 .table-content td a {
@@ -192,11 +195,15 @@ header h2 {
 .table-content td i.fa-check:hover { color: var(--mau-thanh-cong); }
 .table-content td i.fa-remove:hover { color: var(--mau-canh-bao); }
 
-.donhang .table-content td:last-child {
+.sanpham .table-content td:last-child,
+.donhang .table-content td:last-child,
+.khachhang .table-content td:last-child {
     white-space: nowrap;
 }
 
-.donhang .table-content td:last-child .tooltip {
+.sanpham .table-content td:last-child .tooltip,
+.donhang .table-content td:last-child .tooltip,
+.khachhang .table-content td:last-child .tooltip {
     position: relative;
     right: auto;
     bottom: auto;
@@ -209,9 +216,10 @@ header h2 {
 
 .table-footer {
     padding: var(--kc-md);
-    background-color: var(--mau-nen);
-    border: 1px solid var(--mau-vien);
+    background-color: var(--mau-kinh);
+    border: 1px solid var(--vien-kinh);
     border-radius: var(--bo-lg);
+    backdrop-filter: var(--blur-kinh);
 }
 
 div.table-footer {
@@ -225,18 +233,18 @@ div.table-footer {
 .table-footer input {
     height: 38px;
     padding: 0 var(--kc-md);
-    border: 1px solid var(--mau-vien);
+    border: 1px solid var(--vien-kinh);
     border-radius: var(--bo-pill);
-    background-color: var(--mau-nen-phu);
+    background-color: var(--mau-kinh-nhe);
     color: var(--mau-den);
 }
 
 .table-footer button {
     height: 38px;
     padding: 0 var(--kc-lg);
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.24);
     border-radius: var(--bo-pill);
-    background-color: var(--mau-chinh);
+    background: linear-gradient(135deg, rgba(0, 113, 227, 0.92), rgba(0, 102, 204, 0.74));
     color: #ffffff;
     font-weight: 600;
     cursor: pointer;
@@ -244,7 +252,7 @@ div.table-footer {
 }
 
 .table-footer button:hover {
-    background-color: var(--mau-chinh-focus);
+    background: linear-gradient(135deg, rgba(0, 113, 227, 1), rgba(41, 151, 255, 0.86));
 }
 
 .overlay {
@@ -252,11 +260,13 @@ div.table-footer {
     inset: 0;
     overflow-y: auto;
     z-index: 1000;
-    background: rgba(29, 29, 31, 0.4);
-    backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(29, 29, 31, 0.34);
+    backdrop-filter: var(--blur-kinh);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    box-sizing: border-box;
+    padding: var(--kc-xl) var(--kc-md);
     transform: scale(0);
     transform-origin: center;
     transition: transform var(--chuyen-dong-vua);
@@ -264,29 +274,33 @@ div.table-footer {
 
 .overlayTable {
     position: relative;
-    margin: var(--kc-xl) auto;
+    margin: 0 auto;
     width: 100%;
-    max-width: 580px;
-    background: var(--mau-nen);
-    border: 1px solid var(--mau-vien);
+    max-width: 640px;
+    background: var(--mau-kinh);
+    border: 1px solid var(--vien-kinh);
     border-radius: var(--bo-lg);
-    box-shadow: var(--bong-noi-nhe);
+    box-shadow: var(--bong-kinh);
+    backdrop-filter: var(--blur-kinh);
     border-collapse: separate;
-    border-spacing: var(--kc-sm);
-    padding: var(--kc-lg);
+    border-spacing: var(--kc-xs);
+    padding: var(--kc-md);
 }
 
 .overlayTable th {
     font-size: var(--chu-lead);
-    color: var(--mau-den);
+    color: #ffffff;
+    background-color: var(--mau-den);
     font-family: var(--font-hien-thi);
     font-weight: 600;
-    padding-bottom: var(--kc-sm);
+    padding: var(--kc-sm) var(--kc-md);
     border-bottom: 1px solid var(--mau-vien);
+    border-radius: var(--bo-md);
+    cursor: default;
 }
 
 .overlayTable td {
-    padding: var(--kc-xxs) 0;
+    padding: 2px 0;
 }
 
 .overlayTable td:first-child {
@@ -299,33 +313,35 @@ div.table-footer {
 .overlayTable input:not([type="file"]),
 .overlayTable select {
     width: 100%;
-    padding: 8px var(--kc-md);
-    border: 1px solid var(--mau-vien);
+    padding: 6px var(--kc-md);
+    border: 1px solid var(--vien-kinh);
     border-radius: var(--bo-md);
-    background: var(--mau-nen-phu);
+    background: var(--mau-kinh-nhe);
     color: var(--mau-den);
-    height: 38px;
+    height: 34px;
 }
 
 .overlay .close {
-    position: absolute;
-    top: var(--kc-lg);
-    right: var(--kc-lg);
+    position: fixed;
+    top: var(--kc-md);
+    right: var(--kc-md);
+    z-index: 1001;
     font-size: var(--chu-lead);
     width: 44px;
     height: 44px;
     line-height: 44px;
     text-align: center;
-    color: var(--mau-chu-phu);
+    color: #ffffff;
     cursor: pointer;
     border-radius: var(--bo-pill);
-    background: rgba(29, 29, 31, 0.04);
+    background: rgba(29, 29, 31, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     transition: background-color var(--chuyen-dong-nhanh), color var(--chuyen-dong-nhanh);
 }
 
 .overlay .close:hover {
-    color: var(--mau-den);
-    background-color: rgba(29, 29, 31, 0.08);
+    color: #ffffff;
+    background-color: var(--mau-den);
 }
 
 .timTheoNgay {

@@ -2,7 +2,7 @@ window.onload = () => taiSanPhamVaChay(() => {
     khoiTao();
 
     // thêm tags (từ khóa) vào khung tìm kiếm
-    var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
+    var tags = ["Mac", "iPad", "iPhone", "Watch", "Vision", "AirPods"];
     for (var t of tags) addTags(t, "index.html?search=" + t);
 });
 

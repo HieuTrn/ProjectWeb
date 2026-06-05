@@ -44,7 +44,6 @@ function dangKyRoutes(router) {
             const donHang = await taoDonHang(user._id, idempotencyKey);
             guiThanhCong(res, donHang);
         } catch (loi) {
-            console.error('Checkout error:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi tạo đơn hàng', 400);
         }
     });
@@ -111,7 +110,6 @@ function dangKyRoutes(router) {
             const donHang = await duyetDonHangAdmin(orderId, duyetDon);
             guiThanhCong(res, donHang);
         } catch (loi) {
-            console.error('Update order status error:', loi);
             guiLoi(res, 'BAD_REQUEST', loi.message || 'Lỗi khi cập nhật trạng thái đơn hàng', 400);
         }
     });

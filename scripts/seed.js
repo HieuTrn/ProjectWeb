@@ -11,7 +11,7 @@ const dsApple = [
     {
         masp: 'App0',
         name: 'iPhone X 256GB Silver',
-        company: 'Apple',
+        company: 'iPhone',
         img: 'img/products/iphone-x-256gb-silver-400x400.jpg',
         price: 31990000,
         star: 4,
@@ -36,7 +36,7 @@ const dsApple = [
     {
         masp: 'App1',
         name: 'iPad 2018 Wifi 32GB',
-        company: 'Apple',
+        company: 'iPad',
         img: 'img/products/ipad-wifi-32gb-2018-thumb-600x600.jpg',
         price: 8990000,
         star: 0,
@@ -61,7 +61,7 @@ const dsApple = [
     {
         masp: 'App2',
         name: 'iPhone 7 Plus 32GB',
-        company: 'Apple',
+        company: 'iPhone',
         img: 'img/products/iphone-7-plus-32gb-hh-600x600.jpg',
         price: 17000000,
         star: 0,
@@ -86,7 +86,7 @@ const dsApple = [
     {
         masp: 'App3',
         name: 'iPhone Xr 128GB',
-        company: 'Apple',
+        company: 'iPhone',
         img: 'https://cdn.tgdd.vn/Products/Images/42/191483/iphone-xr-128gb-red-600x600.jpg',
         price: 24990000,
         star: 0,
@@ -111,7 +111,7 @@ const dsApple = [
     {
         masp: 'App4',
         name: 'iPhone 8 Plus 64GB',
-        company: 'Apple',
+        company: 'iPhone',
         img: 'https://cdn.tgdd.vn/Products/Images/42/114110/iphone-8-plus-hh-600x600.jpg',
         price: 20990000,
         star: 5,
@@ -136,7 +136,7 @@ const dsApple = [
     {
         masp: 'App5',
         name: 'iPhone 8 Plus 256GB',
-        company: 'Apple',
+        company: 'iPhone',
         img: 'https://cdn.tgdd.vn/Products/Images/42/114114/iphone-8-plus-256gb-red-600x600.jpg',
         price: 25790000,
         star: 5,
@@ -161,7 +161,7 @@ const dsApple = [
     {
         masp: 'App6',
         name: 'iPhone Xr 64GB',
-        company: 'Apple',
+        company: 'iPhone',
         img: 'https://cdn.tgdd.vn/Products/Images/42/190325/iphone-xr-black-400x460.png',
         price: 22990000,
         star: 4,
@@ -186,7 +186,7 @@ const dsApple = [
     {
         masp: 'App7',
         name: 'AirPods 2',
-        company: 'Apple',
+        company: 'AirPods',
         img: 'img/products/airpods-2.webp',
         price: 2990000,
         star: 5,
@@ -211,7 +211,7 @@ const dsApple = [
     {
         masp: 'App8',
         name: 'AirPods 3',
-        company: 'Apple',
+        company: 'AirPods',
         img: 'img/products/airpods3.webp',
         price: 4490000,
         star: 4,
@@ -236,7 +236,7 @@ const dsApple = [
     {
         masp: 'App9',
         name: 'AirPods 4',
-        company: 'Apple',
+        company: 'AirPods',
         img: 'img/products/airpods-4.webp',
         price: 4790000,
         star: 5,
@@ -261,7 +261,7 @@ const dsApple = [
     {
         masp: 'App10',
         name: 'AirPods Max',
-        company: 'Apple',
+        company: 'AirPods',
         img: 'img/products/airpods_max.webp',
         price: 13990000,
         star: 5,
@@ -286,7 +286,7 @@ const dsApple = [
     {
         masp: 'App11',
         name: 'iPad 10.9-inch (Gen 10) Wifi',
-        company: 'Apple',
+        company: 'iPad',
         img: 'img/products/ipad-a16.webp',
         price: 10990000,
         star: 5,
@@ -311,7 +311,7 @@ const dsApple = [
     {
         masp: 'App12',
         name: 'iPad Air 11-inch M2',
-        company: 'Apple',
+        company: 'iPad',
         img: 'img/products/ipad-air-11.webp',
         price: 16990000,
         star: 5,
@@ -336,7 +336,7 @@ const dsApple = [
     {
         masp: 'App13',
         name: 'iPad Pro 11-inch M4',
-        company: 'Apple',
+        company: 'iPad',
         img: 'img/products/ipad-pro-m5.webp',
         price: 28990000,
         star: 5,
@@ -361,7 +361,7 @@ const dsApple = [
     {
         masp: 'App14',
         name: 'iPad mini 6 Wifi',
-        company: 'Apple',
+        company: 'iPad',
         img: 'img/products/ipad_mini.webp',
         price: 12990000,
         star: 4,
@@ -386,7 +386,7 @@ const dsApple = [
     {
         masp: 'App15',
         name: 'iPhone 16',
-        company: 'Apple',
+        company: 'iPhone',
         img: 'img/products/iphone_17.webp',
         price: 22990000,
         star: 5,
@@ -411,7 +411,7 @@ const dsApple = [
     {
         masp: 'App16',
         name: 'iPhone 16 Pro',
-        company: 'Apple',
+        company: 'iPhone',
         img: 'img/products/iphone-17-pro.webp',
         price: 28990000,
         star: 5,
@@ -436,7 +436,7 @@ const dsApple = [
     {
         masp: 'App17',
         name: 'iPhone 16 Pro Max',
-        company: 'Apple',
+        company: 'iPhone',
         img: 'img/products/iphone-17-pro-max.webp',
         price: 34990000,
         star: 5,
@@ -461,7 +461,7 @@ const dsApple = [
     {
         masp: 'App18',
         name: 'MacBook Air 13-inch M3',
-        company: 'Apple',
+        company: 'Mac',
         img: 'img/products/mac-M5.webp',
         price: 27990000,
         star: 5,
@@ -486,7 +486,7 @@ const dsApple = [
     {
         masp: 'App19',
         name: 'MacBook Air 13-inch M2',
-        company: 'Apple',
+        company: 'Mac',
         img: 'img/products/mac_air_neo.webp',
         price: 24990000,
         star: 5,
@@ -511,7 +511,7 @@ const dsApple = [
     {
         masp: 'App20',
         name: 'MacBook Pro 14-inch M3',
-        company: 'Apple',
+        company: 'Mac',
         img: 'img/products/mac_pro_M5.webp',
         price: 39990000,
         star: 5,

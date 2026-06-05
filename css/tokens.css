@@ -11,6 +11,10 @@
     --mau-chu-mo: rgba(29, 29, 31, 0.48);
     --mau-vien: rgba(0, 0, 0, 0.08);
     --mau-vien-ro: rgba(0, 0, 0, 0.14);
+    --mau-kinh: rgba(255, 255, 255, 0.72);
+    --mau-kinh-nhe: rgba(255, 255, 255, 0.52);
+    --mau-kinh-dam: rgba(29, 29, 31, 0.72);
+    --vien-kinh: rgba(255, 255, 255, 0.52);
     --mau-canh-bao: #bf4800;
     --mau-thanh-cong: #1d7f37;
     --font-hien-thi: "SF Pro Display", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -38,6 +42,8 @@
     --bo-pill: 9999px;
     --bong-san-pham: rgba(0, 0, 0, 0.22) 3px 5px 30px 0;
     --bong-noi-nhe: 0 8px 24px rgba(0, 0, 0, 0.06);
+    --bong-kinh: 0 18px 45px rgba(29, 29, 31, 0.12);
+    --blur-kinh: saturate(180%) blur(20px);
     --chuyen-dong-nhanh: 160ms ease;
     --chuyen-dong-vua: 240ms ease;
 }
