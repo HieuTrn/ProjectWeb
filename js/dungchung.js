@@ -3,7 +3,7 @@ var list_products = [];
 
 async function taiDanhSachSanPhamTuApi() {
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/products');
+        const phanHoi = await fetch('/api/products');
         const ketQua = await phanHoi.json();
         if (ketQua.success && ketQua.data) {
             list_products = ketQua.data.map(p => ({
@@ -22,7 +22,7 @@ async function taiDanhSachSanPhamTuApi() {
 
 async function taiThongTinNguoiDungTuApi() {
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/auth/me', {
+        const phanHoi = await fetch('/api/auth/me', {
             credentials: 'include'
         });
         const ketQua = await phanHoi.json();
@@ -140,7 +140,7 @@ async function themVaoGioHang(masp, tensp) {
     }
 
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/cart/add', {
+        const phanHoi = await fetch('/api/cart/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -177,7 +177,7 @@ async function logIn(form) {
     var pass = form.pass.value;
 
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/auth/login', {
+        const phanHoi = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -209,7 +209,7 @@ async function signUp(form) {
     var pass = form.newPass.value;
 
     try {
-        const phanHoi = await fetch('http://localhost:3000/api/auth/register', {
+        const phanHoi = await fetch('/api/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -218,16 +218,23 @@ async function signUp(form) {
         const ketQua = await phanHoi.json();
         if (ketQua.success) {
             alert('Đăng kí thành công, Bạn sẽ được tự động đăng nhập!');
-            
-            const dangNhapPhanHoi = await fetch('http://localhost:3000/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ username, pass })
-            });
-            const dangNhapKetQua = await dangNhapPhanHoi.json();
-            if (dangNhapKetQua.success) {
-                location.reload();
+
+            try {
+                const dangNhapPhanHoi = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username, pass })
+                });
+                const dangNhapKetQua = await dangNhapPhanHoi.json();
+                if (dangNhapKetQua.success) {
+                    location.reload();
+                } else {
+                    alert(dangNhapKetQua.error.message || 'Đăng ký thành công nhưng chưa tự đăng nhập được. Vui lòng đăng nhập lại.');
+                }
+            } catch (loiDangNhap) {
+                console.error('Lỗi khi tự đăng nhập sau đăng ký:', loiDangNhap);
+                alert('Đăng ký thành công nhưng chưa tự đăng nhập được. Vui lòng đăng nhập lại.');
             }
         } else {
             alert(ketQua.error.message || 'Đăng ký thất bại!');
@@ -241,7 +248,7 @@ async function signUp(form) {
 
 async function logOut() {
     try {
-        await fetch('http://localhost:3000/api/auth/logout', {
+        await fetch('/api/auth/logout', {
             method: 'POST',
             credentials: 'include'
         });
@@ -336,7 +343,7 @@ async function capNhat_ThongTin_CurrentUser() {
             .classList.remove('hide');
 
         try {
-            const phanHoi = await fetch('http://localhost:3000/api/cart', {
+            const phanHoi = await fetch('/api/cart', {
                 credentials: 'include'
             });
             const ketQua = await phanHoi.json();
@@ -629,7 +636,7 @@ function addContainTaiKhoan() {
                 <div id="login">
                     <h1>Chào mừng bạn trở lại!</h1>
 
-                    <form onsubmit="return logIn(this);">
+                    <form onsubmit="logIn(this); return false;">
 
                         <div class="field-wrap">
                             <label>
@@ -647,7 +654,7 @@ function addContainTaiKhoan() {
 
                         <p class="forgot"><a href="#">Quên mật khẩu?</a></p>
 
-                        <button type="submit" class="button button-block" />Tiếp tục</button>
+                        <button type="submit" class="button button-block">Tiếp tục</button>
 
                     </form> <!-- /form -->
 
@@ -656,7 +663,7 @@ function addContainTaiKhoan() {
                 <div id="signup">
                     <h1>Đăng kí miễn phí</h1>
 
-                    <form onsubmit="return signUp(this);">
+                    <form onsubmit="signUp(this); return false;">
 
                         <div class="top-row">
                             <div class="field-wrap">
@@ -695,7 +702,7 @@ function addContainTaiKhoan() {
                             <input name="newPass" type="password" required autocomplete="off" />
                         </div> <!-- /pass -->
 
-                        <button type="submit" class="button button-block" />Tạo tài khoản</button>
+                        <button type="submit" class="button button-block">Tạo tài khoản</button>
 
                     </form> <!-- /form -->
 
