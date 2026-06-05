@@ -1,0 +1,19 @@
+{
+  "name": "project-web-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend ProjectWeb using Node.js http and Mongoose",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20.6.0"
+  },
+  "scripts": {
+    "start": "node --env-file=config/.env src/server.js",
+    "dev": "node --watch --env-file=config/.env src/server.js",
+    "seed": "node --env-file=config/.env scripts/seed.js",
+    "test": "node --env-file=config/.env tests/index.js"
+  },
+  "dependencies": {
+    "mongoose": "^8.4.1"
+  }
+}

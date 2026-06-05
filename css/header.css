@@ -40,10 +40,10 @@
 
 			form.input-search {
 				margin-left: 20px;
-				background: #ddd;
-				border: 2px solid #bbb;
-				border-radius: 10px;
-				height: 35px;
+				background: var(--mau-nen);
+				border: 1px solid var(--mau-vien);
+				border-radius: var(--bo-pill);
+				height: 44px;
 				width: 300px;
 				/* điều chỉnh width của ô tìm kiếm trên header ở đây */
 			}
@@ -51,7 +51,7 @@
 				float: left;
 				padding-left: 15px;
 				border: none;
-				border-radius: 10px 0 0 10px;
+				border-radius: var(--bo-pill) 0 0 var(--bo-pill);
 				height: 100%;
 				width: calc(100% - 100px - 20px);
 				/* 100 la width button, 20 la padding button */

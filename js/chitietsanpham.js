@@ -2,11 +2,11 @@ var nameProduct, maProduct, sanPhamHienTai; // Tên sản phẩm trong trang nà
 // là biến toàn cục để có thể dùng ở bát cứ đâu trong trang
 // không cần tính toán lấy tên từ url nhiều lần
 
-window.onload = function () {
+window.onload = () => taiSanPhamVaChay(() => {
     khoiTao();
 
     // thêm tags (từ khóa) vào khung tìm kiếm
-    var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
+    var tags = ["Mac", "iPad", "iPhone", "Watch", "Vision", "AirPods"];
     for (var t of tags) addTags(t, "index.html?search=" + t, true);
 
     phanTich_URL_chiTietSanPham();
@@ -16,7 +16,7 @@ window.onload = function () {
 
     // Thêm gợi ý sản phẩm
     sanPhamHienTai && suggestion();
-}
+});
 
 function khongTimThaySanPham() {
     document.getElementById('productNotFound').style.display = 'block';
@@ -94,8 +94,11 @@ function phanTich_URL_chiTietSanPham() {
     // Cập nhật hình
     var hinh = divChiTiet.getElementsByClassName('picture')[0];
     hinh = hinh.getElementsByTagName('img')[0];
-    hinh.src = sanPhamHienTai.img;
-    document.getElementById('bigimg').src = sanPhamHienTai.img;
+    const duongDanAnh = (sanPhamHienTai.img.startsWith('http') || sanPhamHienTai.img.startsWith('../')) 
+        ? sanPhamHienTai.img 
+        : '../' + sanPhamHienTai.img;
+    hinh.src = duongDanAnh;
+    document.getElementById('bigimg').src = duongDanAnh;
 
     // Hình nhỏ
     addSmallImg("img/products/huawei-mate-20-pro-green-600x600.jpg");
@@ -149,9 +152,10 @@ function addThongSo(ten, giatri) {
 
 // add hình
 function addSmallImg(img) {
+    var realImg = (img.startsWith('http') || img.startsWith('../')) ? img : '../' + img;
     var newDiv = `<div class='item'>
                         <a>
-                            <img src=` + img + ` onclick="changepic(this.src)">
+                            <img src="` + realImg + `" onclick="changepic(this.src)">
                         </a>
                     </div>`;
     var banner = document.getElementsByClassName('owl-carousel')[0];

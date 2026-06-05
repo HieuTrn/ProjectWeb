@@ -87,7 +87,7 @@ function addToWeb(p, ele, returnString) {
 	var newLi =
 	`<li class="sanPham">
 		<a href="` + chitietSp + `">
-			<img src=` + p.img + ` alt="">
+			<img src="` + (p.img.startsWith('http') ? p.img : '../' + p.img) + `" alt="">
 			<h3>` + p.name + `</h3>
 			<div class="price">
 				` + price + `

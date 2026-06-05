@@ -1,37 +1,57 @@
-var adminInfo = [{
-    "username": "admin",
-    "pass": "adadad"
-}];
+var currentUser = null;
+var list_products = [];
 
-function getListAdmin() {
-    return JSON.parse(window.localStorage.getItem('ListAdmin'));
+async function taiDanhSachSanPhamTuApi() {
+    try {
+        const phanHoi = await fetch('http://localhost:3000/api/products');
+        const ketQua = await phanHoi.json();
+        if (ketQua.success && ketQua.data) {
+            list_products = ketQua.data.map(p => ({
+                ...p,
+                price: numToString(p.price)
+            }));
+            console.log('Tải danh sách sản phẩm từ MongoDB thành công.');
+        } else {
+            list_products = [];
+        }
+    } catch (loi) {
+        console.error('Không thể kết nối API sản phẩm:', loi);
+        list_products = [];
+    }
 }
 
-function setListAdmin(l) {
-    window.localStorage.setItem('ListAdmin', JSON.stringify(l));
+async function taiThongTinNguoiDungTuApi() {
+    try {
+        const phanHoi = await fetch('http://localhost:3000/api/auth/me', {
+            credentials: 'include'
+        });
+        const ketQua = await phanHoi.json();
+        if (ketQua.success && ketQua.data) {
+            currentUser = ketQua.data;
+        } else {
+            currentUser = null;
+        }
+    } catch (loi) {
+        console.error('Không thể lấy thông tin người dùng từ API:', loi);
+        currentUser = null;
+    }
 }
 
+async function taiSanPhamVaChay(boXuLySauKhiTai) {
+    await taiDanhSachSanPhamTuApi();
+    await taiThongTinNguoiDungTuApi();
+    if (boXuLySauKhiTai) {
+        boXuLySauKhiTai();
+    }
+}
 
-// Hàm khởi tạo, tất cả các trang đều cần
-function khoiTao() {
-    // get data từ localstorage
-    list_products = getListProducts() || list_products;
-    adminInfo = getListAdmin() || adminInfo;
-
+async function khoiTao() {
     setupEventTaiKhoan();
-    capNhat_ThongTin_CurrentUser();
+    await capNhat_ThongTin_CurrentUser();
     addEventCloseAlertButton();
 }
 
 // ========= Các hàm liên quan tới danh sách sản phẩm =========
-// Localstorage cho dssp: 'ListProducts
-function setListProducts(newList) {
-    window.localStorage.setItem('ListProducts', JSON.stringify(newList));
-}
-
-function getListProducts() {
-    return JSON.parse(window.localStorage.getItem('ListProducts'));
-}
 
 function timKiemTheoTen(list, ten, soluong) {
     var tempList = copyObject(list);
@@ -106,7 +126,7 @@ function animateCartNumber() {
     }, 1200);
 }
 
-function themVaoGioHang(masp, tensp) {
+async function themVaoGioHang(masp, tensp) {
     var user = getCurrentUser();
     if (!user) {
         alert('Bạn cần đăng nhập để mua hàng !');
@@ -118,151 +138,116 @@ function themVaoGioHang(masp, tensp) {
         addAlertBox('Tài khoản của bạn đã bị khóa bởi Admin.', '#aa0000', '#fff', 10000);
         return;
     }
-    var t = new Date();
-    var daCoSanPham = false;;
 
-    for (var i = 0; i < user.products.length; i++) { // check trùng sản phẩm
-        if (user.products[i].ma == masp) {
-            user.products[i].soluong++;
-            daCoSanPham = true;
-            break;
-        }
-    }
-
-    if (!daCoSanPham) { // nếu không trùng thì mới thêm sản phẩm vào user.products
-        user.products.push({
-            "ma": masp,
-            "soluong": 1,
-            "date": t
+    try {
+        const phanHoi = await fetch('http://localhost:3000/api/cart/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ masp, soluong: 1 })
         });
+        const ketQua = await phanHoi.json();
+        if (ketQua.success) {
+            animateCartNumber();
+            addAlertBox('Đã thêm ' + tensp + ' vào giỏ.', '#17c671', '#fff', 3500);
+            await capNhat_ThongTin_CurrentUser();
+        } else {
+            alert(ketQua.error.message || 'Không thể thêm sản phẩm vào giỏ hàng');
+        }
+    } catch (loi) {
+        console.error(loi);
+        alert('Không thể kết nối tới server!');
     }
-
-    animateCartNumber();
-    addAlertBox('Đã thêm ' + tensp + ' vào giỏ.', '#17c671', '#fff', 3500);
-
-    setCurrentUser(user); // cập nhật giỏ hàng cho user hiện tại
-    updateListUser(user); // cập nhật list user
-    capNhat_ThongTin_CurrentUser(); // cập nhật giỏ hàng
 }
 
 // ============================== TÀI KHOẢN ============================
 
 // Hàm get set cho người dùng hiện tại đã đăng nhập
 function getCurrentUser() {
-    return JSON.parse(window.localStorage.getItem('CurrentUser')); // Lấy dữ liệu từ localstorage
+    return currentUser;
 }
 
 function setCurrentUser(u) {
-    window.localStorage.setItem('CurrentUser', JSON.stringify(u));
+    currentUser = u;
 }
 
-// Hàm get set cho danh sách người dùng
-function getListUser() {
-    var data = JSON.parse(window.localStorage.getItem('ListUser')) || []
-    var l = [];
-    for (var d of data) {
-        l.push(d);
-    }
-    return l;
-}
 
-function setListUser(l) {
-    window.localStorage.setItem('ListUser', JSON.stringify(l));
-}
-
-// Sau khi chỉnh sửa 1 user 'u' thì cần hàm này để cập nhật lại vào ListUser
-function updateListUser(u, newData) {
-    var list = getListUser();
-    for (var i = 0; i < list.length; i++) {
-        if (equalUser(u, list[i])) {
-            list[i] = (newData ? newData : u);
-        }
-    }
-    setListUser(list);
-}
-
-function logIn(form) {
-    // Lấy dữ liệu từ form
+async function logIn(form) {
     var name = form.username.value;
     var pass = form.pass.value;
-    var newUser = new User(name, pass);
 
-    // Lấy dữ liệu từ danh sách người dùng localstorage
-    var listUser = getListUser();
-
-    // Kiểm tra xem dữ liệu form có khớp với người dùng nào trong danh sách ko
-    for (var u of listUser) {
-        if (equalUser(newUser, u)) {
-            if(u.off) {
-                alert('Tài khoản này đang bị khoá. Không thể đăng nhập.');
-                return false;
+    try {
+        const phanHoi = await fetch('http://localhost:3000/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ username: name, pass: pass })
+        });
+        const ketQua = await phanHoi.json();
+        if (ketQua.success) {
+            alert('Đăng nhập thành công!');
+            if (ketQua.data.role === 'admin') {
+                window.location.assign('admin.html');
+            } else {
+                location.reload();
             }
-
-            setCurrentUser(u);
-
-            // Reload lại trang -> sau khi reload sẽ cập nhật luôn giỏ hàng khi hàm setupEventTaiKhoan chạy
-            location.reload();
-            return false;
+        } else {
+            alert(ketQua.error.message || 'Nhập sai tên hoặc mật khẩu !!!');
         }
+    } catch (loi) {
+        console.error('Lỗi khi đăng nhập:', loi);
+        alert('Không thể kết nối tới server!');
     }
-
-    // Đăng nhập vào admin
-    for (var ad of adminInfo) {
-        if (equalUser(newUser, ad)) {
-            alert('Xin chào admin .. ');
-            window.localStorage.setItem('admin', true);
-            window.location.assign('admin.html');
-            return false;
-        }
-    }
-
-    // Trả về thông báo nếu không khớp
-    alert('Nhập sai tên hoặc mật khẩu !!!');
-    form.username.focus();
     return false;
 }
 
-function signUp(form) {
+async function signUp(form) {
     var ho = form.ho.value;
     var ten = form.ten.value;
     var email = form.email.value;
     var username = form.newUser.value;
     var pass = form.newPass.value;
-    var newUser = new User(username, pass, ho, ten, email);
 
-    // Lấy dữ liệu các khách hàng hiện có
-    var listUser = getListUser();
-
-    // Kiểm tra trùng admin
-    for (var ad of adminInfo) {
-        if (newUser.username == ad.username) {
-            alert('Tên đăng nhập đã có người sử dụng !!');
-            return false;
+    try {
+        const phanHoi = await fetch('http://localhost:3000/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ username, pass, ho, ten, email })
+        });
+        const ketQua = await phanHoi.json();
+        if (ketQua.success) {
+            alert('Đăng kí thành công, Bạn sẽ được tự động đăng nhập!');
+            
+            const dangNhapPhanHoi = await fetch('http://localhost:3000/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ username, pass })
+            });
+            const dangNhapKetQua = await dangNhapPhanHoi.json();
+            if (dangNhapKetQua.success) {
+                location.reload();
+            }
+        } else {
+            alert(ketQua.error.message || 'Đăng ký thất bại!');
         }
+    } catch (loi) {
+        console.error('Lỗi khi đăng ký:', loi);
+        alert('Không thể kết nối tới server!');
     }
-
-    // Kiểm tra xem dữ liệu form có trùng với khách hàng đã có không
-    for (var u of listUser) {
-        if (newUser.username == u.username) {
-            alert('Tên đăng nhập đã có người sử dụng !!');
-            return false;
-        }
-    }
-
-    // Lưu người mới vào localstorage
-    listUser.push(newUser);
-    window.localStorage.setItem('ListUser', JSON.stringify(listUser));
-
-    // Đăng nhập vào tài khoản mới tạo
-    window.localStorage.setItem('CurrentUser', JSON.stringify(newUser));
-    alert('Đăng kí thành công, Bạn sẽ được tự động đăng nhập!');
-    location.reload();
-
     return false;
 }
 
-function logOut() {
-    window.localStorage.removeItem('CurrentUser');
+async function logOut() {
+    try {
+        await fetch('http://localhost:3000/api/auth/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+    } catch (loi) {
+        console.error('Lỗi khi đăng xuất:', loi);
+    }
     location.reload();
 }
 
@@ -342,36 +327,33 @@ function setupEventTaiKhoan() {
 }
 
 // Cập nhật số lượng hàng trong giỏ hàng + Tên current user
-function capNhat_ThongTin_CurrentUser() {
+async function capNhat_ThongTin_CurrentUser() {
     var u = getCurrentUser();
     if (u) {
-        // Cập nhật số lượng hàng vào header
-        document.getElementsByClassName('cart-number')[0].innerHTML = getTongSoLuongSanPhamTrongGioHang(u);
-        // Cập nhật tên người dùng
         document.getElementsByClassName('member')[0]
             .getElementsByTagName('a')[0].childNodes[2].nodeValue = ' ' + u.username;
-        // bỏ class hide của menu người dùng
         document.getElementsByClassName('menuMember')[0]
             .classList.remove('hide');
-    }
-}
 
-// tính tổng số lượng các sản phẩm của user u truyền vào
-function getTongSoLuongSanPhamTrongGioHang(u) {
-    var soluong = 0;
-    for (var p of u.products) {
-        soluong += p.soluong;
+        try {
+            const phanHoi = await fetch('http://localhost:3000/api/cart', {
+                credentials: 'include'
+            });
+            const ketQua = await phanHoi.json();
+            if (ketQua.success && ketQua.data) {
+                let soluong = 0;
+                for (var item of ketQua.data) {
+                    soluong += item.soluong;
+                }
+                document.getElementsByClassName('cart-number')[0].innerHTML = soluong;
+            } else {
+                document.getElementsByClassName('cart-number')[0].innerHTML = 0;
+            }
+        } catch (loi) {
+            console.error(loi);
+            document.getElementsByClassName('cart-number')[0].innerHTML = 0;
+        }
     }
-    return soluong;
-}
-
-// lấy số lương của sản phẩm NÀO ĐÓ của user NÀO ĐÓ được truyền vào
-function getSoLuongSanPhamTrongUser(tenSanPham, user) {
-    for (var p of user.products) {
-        if (p.name == tenSanPham)
-            return p.soluong;
-    }
-    return 0;
 }
 
 // ==================== Những hàm khác ===================== 
@@ -518,13 +500,18 @@ function addProduct(p, ele, returnString) {
 // Thêm topnav vào trang
 function addTopNav() {
     document.write(`    
-	<div class="top-nav group">
+	<div class="top-nav group global-nav">
         <section>
             <ul class="top-nav-quicklink flexContain">
-                <li><a href="index.html"><i class="fa fa-home"></i> Trang chủ</a></li>
-                <li><a href="tintuc.html"><i class="fa fa-newspaper-o"></i> Tin tức</a></li>
-                <li><a href="gioithieu.html"><i class="fa fa-info-circle"></i> Giới thiệu</a></li>
-                <li><a href="lienhe.html"><i class="fa fa-phone"></i> Liên hệ</a></li>
+                <li><a class="nav-logo" href="index.html"><i class="fa fa-apple"></i></a></li>
+                <li><a href="index.html">Store</a></li>
+                <li><a href="index.html?company=iPhone">iPhone</a></li>
+                <li><a href="index.html?company=iPad">iPad</a></li>
+                <li><a href="index.html?company=Mac">Mac</a></li>
+                <li><a href="index.html?company=AirPods">AirPods</a></li>
+                <li><a href="tintuc.html">Tin tức</a></li>
+                <li><a href="gioithieu.html">Giới thiệu</a></li>
+                <li><a href="lienhe.html">Liên hệ</a></li>
             </ul> <!-- End Quick link -->
         </section><!-- End Section -->
     </div><!-- End Top Nav  -->`);
@@ -533,26 +520,26 @@ function addTopNav() {
 // Thêm header
 function addHeader() {
     document.write(`        
-	<div class="header group">
+	<div class="header group sub-nav-frosted">
         <div class="logo">
             <a href="index.html">
-                <img src="img/logo.jpg" alt="Trang chủ Smartphone Store" title="Trang chủ Smartphone Store">
+                <span>Apple Store</span>
             </a>
         </div> <!-- End Logo -->
 
         <div class="content">
-            <div class="search-header" style="position: relative; left: 162px; top: 1px;">
+            <div class="search-header">
                 <form class="input-search" method="get" action="index.html">
                     <div class="autocomplete">
-                        <input id="search-box" name="search" autocomplete="off" type="text" placeholder="Nhập từ khóa tìm kiếm...">
+                        <input id="search-box" name="search" autocomplete="off" type="text" placeholder="Tìm iPhone, iPad, Mac...">
                         <button type="submit">
                             <i class="fa fa-search"></i>
-                            Tìm kiếm
+                            Tìm
                         </button>
                     </div>
                 </form> <!-- End Form search -->
                 <div class="tags">
-                    <strong>Từ khóa: </strong>
+                    <strong>Khám phá: </strong>
                 </div>
             </div> <!-- End Search header -->
 
@@ -596,9 +583,33 @@ function addFooter() {
     </div>
 
     <!-- ============== Footer ============= -->
+    <div class="footer-main">
+        <section>
+            <div class="footer-grid">
+                <div>
+                    <h4>Mua sắm</h4>
+                    <a href="index.html?company=iPhone">iPhone</a>
+                    <a href="index.html?company=iPad">iPad</a>
+                    <a href="index.html?company=Mac">Mac</a>
+                    <a href="index.html?company=AirPods">AirPods</a>
+                </div>
+                <div>
+                    <h4>Tài khoản</h4>
+                    <a href="nguoidung.html">Thông tin cá nhân</a>
+                    <a href="giohang.html">Giỏ hàng</a>
+                    <a href="giohang.html">Thanh toán</a>
+                </div>
+                <div>
+                    <h4>Hỗ trợ</h4>
+                    <a href="trungtambaohanh.html">Bảo hành</a>
+                    <a href="lienhe.html">Liên hệ</a>
+                    <a href="gioithieu.html">Giới thiệu</a>
+                </div>
+            </div>
+        </section>
+    </div>
     <div class="copy-right">
-        <p><a href="index.html">LDD Phone Store</a> - All rights reserved © 2021 - Designed by
-            <span style="color: #eee; font-weight: bold">group 15th</span></p>
+        <p><a href="index.html">Apple Store</a> - Trải nghiệm mua sắm Apple tinh gọn</p>
     </div>`);
 }
 
@@ -700,13 +711,13 @@ function addPlc() {
     <div class="plc">
         <section>
             <ul class="flexContain">
-                <li>Giao hàng hỏa tốc trong 1 giờ</li>
-                <li>Thanh toán linh hoạt: tiền mặt, visa / master, trả góp</li>
-                <li>Trải nghiệm sản phẩm tại nhà</li>
-                <li>Lỗi đổi tại nhà trong 1 ngày</li>
+                <li>Giao hàng nhanh cho sản phẩm Apple</li>
+                <li>Thanh toán linh hoạt và hỗ trợ trả góp</li>
+                <li>Tư vấn chọn iPhone, iPad, Mac phù hợp</li>
+                <li>Đổi trả rõ ràng theo tình trạng đơn hàng</li>
                 <li>Hỗ trợ suốt thời gian sử dụng.
                     <br>Hotline:
-                    <a href="tel:12345678" style="color: #288ad6;">12345678</a>
+                    <a href="tel:12345678" style="color: #0066cc;">12345678</a>
                 </li>
             </ul>
         </section>

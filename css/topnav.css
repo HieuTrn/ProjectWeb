@@ -48,8 +48,8 @@
 		}
 		.top-nav-quicklink li a:hover {
 			padding-top: 4px; 
-			border-bottom: 4px solid #000;
-			color: #000;
+			border-bottom: 4px solid #fff;
+			color: #fff;
 		}
 		.top-nav-quicklink li a:hover i {
 			color: Dodgerblue;

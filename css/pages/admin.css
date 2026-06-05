@@ -1,0 +1,87 @@
+body,
+html {
+    min-width: 1024px;
+    background: #f5f5f7;
+}
+
+header {
+    background: #000000;
+    border-bottom: none;
+}
+
+header h2 {
+    font-family: var(--font-hien-thi);
+    font-weight: 600;
+}
+
+.sidebar {
+    min-height: calc(100vh - 73px);
+    background: #1d1d1f;
+}
+
+.sidebar .nav-title {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: var(--chu-caption);
+}
+
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.sidebar .nav-link i {
+    color: rgba(255, 255, 255, 0.56);
+}
+
+.sidebar .nav-link.active,
+.sidebar .nav-link.active i {
+    background: var(--mau-chinh);
+}
+
+.sidebar .nav-link:hover:not(.active),
+.sidebar .nav-link:hover:not(.active) i {
+    background: #272729;
+}
+
+.main {
+    padding: var(--kc-xl);
+}
+
+.home .canvasContainer,
+.table-header,
+.table-content,
+.table-footer {
+    border-radius: var(--bo-lg);
+    background: #ffffff;
+    box-shadow: var(--bong-noi-nhe);
+}
+
+.table-header th {
+    color: #ffffff;
+    background: #1d1d1f;
+}
+
+.table-content tr:nth-of-type(even) {
+    background-color: #f5f5f7;
+}
+
+.table-content td,
+.table-content td a,
+.timTheoNgay {
+    color: #1d1d1f;
+}
+
+.table-footer {
+    border-top: none;
+}
+
+.table-footer input,
+.table-footer button,
+.table-footer select,
+.overlayTable input {
+    min-height: 40px;
+}
+
+.overlayTable {
+    border-radius: var(--bo-lg);
+    background: #ffffff;
+}
