@@ -3,7 +3,7 @@ window.onload = () => taiSanPhamVaChay(() => {
 
 	// Thêm hình vào banner
 	addBanner("../img/banners/banner0.gif", "../img/banners/banner0.gif");
-	var numBanner = 1; // Số lượng hình banner
+	var numBanner = 3; // Số lượng hình banner
 	for (var i = 1; i <= numBanner; i++) {
 		var linkimg = "../img/banners/banner" + i + ".png";
 		addBanner(linkimg, linkimg);
