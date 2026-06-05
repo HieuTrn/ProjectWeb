@@ -79,9 +79,8 @@ function addToWeb(p, ele, returnString) {
 				<span>` + p.price + `&#8363;</span>`;
 	}
 
-	// tách theo dấu ' ' vào gắn lại bằng dấu '-', code này giúp bỏ hết khoảng trắng và thay vào bằng dấu '-'.
-	// Tạo link tới chi tiết sản phẩm, chuyển tất cả ' ' thành '-'
-	var chitietSp = 'chitietsanpham.html?' + p.name.split(' ').join('-');
+	// Dùng mã sản phẩm để mở chi tiết, tránh lỗi với tên có dấu gạch nối thật như "13-inch".
+	var chitietSp = 'chitietsanpham.html?masp=' + encodeURIComponent(p.masp);
 
 	// Cho mọi thứ vào tag <li>... </li>
 	var newLi =

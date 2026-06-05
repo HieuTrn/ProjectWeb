@@ -89,7 +89,7 @@ function addProductToTable() {
             <tr>
                 <td>` + (i + 1) + `</td>
                 <td class="noPadding imgHide">
-                    <a target="_blank" href="chitietsanpham.html?` + p.name.split(' ').join('-') + `" title="Xem chi tiết">
+                    <a target="_blank" href="chitietsanpham.html?masp=` + encodeURIComponent(p.masp) + `" title="Xem chi tiết">
                         ` + p.name + `
                         <img src="` + p.img + `">
                     </a>

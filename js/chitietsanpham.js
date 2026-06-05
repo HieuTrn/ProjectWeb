@@ -24,22 +24,23 @@ function khongTimThaySanPham() {
 }
 
 function phanTich_URL_chiTietSanPham() {
-    nameProduct = window.location.href.split('?')[1]; // lấy tên
-    if(!nameProduct) return khongTimThaySanPham();
+    const queryString = window.location.search.substring(1);
+    if(!queryString) return khongTimThaySanPham();
 
-    // tách theo dấu '-' vào gắn lại bằng dấu ' ', code này giúp bỏ hết dấu '-' thay vào bằng khoảng trắng.
-    // code này làm ngược lại so với lúc tạo href cho sản phẩm trong file classes.js
-    nameProduct = nameProduct.split('-').join(' ');
+    const params = new URLSearchParams(window.location.search);
+    maProduct = params.get('masp');
 
-    for(var p of list_products) {
-        if(nameProduct == p.name) {
-            maProduct = p.masp;
-            break;
-        }
+    if (maProduct) {
+        sanPhamHienTai = timKiemTheoMa(list_products, maProduct);
+    } else {
+        const slugCu = decodeURIComponent(queryString);
+        sanPhamHienTai = list_products.find(p => p.name.split(' ').join('-') === slugCu);
     }
 
-    sanPhamHienTai = timKiemTheoMa(list_products, maProduct);
     if(!sanPhamHienTai) return khongTimThaySanPham();
+
+    maProduct = sanPhamHienTai.masp;
+    nameProduct = sanPhamHienTai.name;
 
     var divChiTiet = document.getElementsByClassName('chitietSanpham')[0];
 

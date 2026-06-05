@@ -14,6 +14,15 @@ function chuanHoaGia(gia) {
     throw new Error('Giá sản phẩm không hợp lệ');
 }
 
+function chuanHoaSoLuongTon(stock) {
+    if (stock === undefined || stock === null || stock === '') return 100;
+    const soLuong = Number.parseInt(stock, 10);
+    if (!Number.isInteger(soLuong) || soLuong < 0) {
+        throw new Error('Số lượng sản phẩm phải là số nguyên không âm');
+    }
+    return soLuong;
+}
+
 async function layDanhSachSanPham() {
     return await Product.find({}).lean();
 }
@@ -24,13 +33,19 @@ async function layChiTietSanPhamTheoMasp(masp) {
 
 async function layChiTietSanPhamTheoTen(tenSp) {
     if (!tenSp) return null;
-    const tenChuan = tenSp.split('-').join(' ');
-    const tenChuanEscaped = escapeRegExp(tenChuan);
-    return await Product.findOne({ name: { $regex: new RegExp(`^${tenChuanEscaped}$`, 'i') } }).lean();
+    const tenChuan = tenSp.trim();
+    const sanPham = await Product.findOne({
+        name: { $regex: new RegExp(`^${escapeRegExp(tenChuan)}$`, 'i') }
+    }).lean();
+
+    if (sanPham) return sanPham;
+
+    const danhSachSanPham = await Product.find({}).lean();
+    return danhSachSanPham.find(p => p.name.split(' ').join('-') === tenChuan) || null;
 }
 
 async function themSanPham(duLieu) {
-    const { masp, name, company, img, price, star, rateCount, promo, detail } = duLieu;
+    const { masp, name, company, img, price, stock, star, rateCount, promo, detail } = duLieu;
     if (!masp) throw new Error('Thiếu mã sản phẩm');
 
     const maspChuan = masp.trim();
@@ -53,6 +68,7 @@ async function themSanPham(duLieu) {
         company: (company || '').trim(),
         img: (img || '').trim(),
         price: priceChuan,
+        stock: chuanHoaSoLuongTon(stock),
         star: Number(star) || 0,
         rateCount: Number(rateCount) || 0,
         promo: {
@@ -81,7 +97,7 @@ async function suaSanPham(maspCu, duLieu) {
         throw new Error('Không tìm thấy sản phẩm cần sửa');
     }
 
-    const { masp, name, company, img, price, star, rateCount, promo, detail } = duLieu;
+    const { masp, name, company, img, price, stock, star, rateCount, promo, detail } = duLieu;
     const maspChuan = (masp || maspCu).trim();
 
     if (maspChuan !== maspCu) {
@@ -106,6 +122,7 @@ async function suaSanPham(maspCu, duLieu) {
     if (company) capNhat.company = company.trim();
     if (img) capNhat.img = img.trim();
     if (price !== undefined) capNhat.price = chuanHoaGia(price);
+    if (stock !== undefined) capNhat.stock = chuanHoaSoLuongTon(stock);
     if (star !== undefined) capNhat.star = Number(star) || 0;
     if (rateCount !== undefined) capNhat.rateCount = Number(rateCount) || 0;
     
