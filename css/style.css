@@ -142,8 +142,8 @@ hr {
 .tooltip {
     position: absolute;
     display: inline-block;
-    bottom: 5px;
-    right: 5px;
+    bottom: 12px;
+    right: 12px;
 }
 
 .tooltip .tooltiptext {

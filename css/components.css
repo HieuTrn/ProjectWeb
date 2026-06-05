@@ -1,0 +1,271 @@
+.sanPham, .sanPham *, .input-search, .input-search * {
+    box-sizing: border-box;
+}
+
+.input-search,
+.filterName input,
+.taikhoan input,
+.taikhoan textarea,
+.infoUser input,
+.table-footer input,
+.table-footer select,
+.overlayTable input,
+table input,
+textarea,
+select {
+    border-color: var(--mau-vien);
+    border-radius: var(--bo-pill);
+    color: var(--mau-den);
+    background-color: var(--mau-nen);
+    transition: border-color var(--chuyen-dong-nhanh), box-shadow var(--chuyen-dong-nhanh), background-color var(--chuyen-dong-nhanh);
+}
+
+.input-search {
+    height: 44px;
+    border: 1px solid var(--mau-vien);
+    background: var(--mau-nen);
+    overflow: visible;
+}
+
+.input-search input {
+    border-radius: var(--bo-pill) 0 0 var(--bo-pill);
+    color: var(--mau-den);
+    background: transparent;
+}
+
+.filterName input {
+    min-width: 280px;
+    height: 44px;
+    padding: 0 var(--kc-lg);
+    border: 1px solid var(--mau-vien);
+    font-size: var(--chu-body);
+}
+
+.filterName input:focus,
+.taikhoan input:focus,
+.taikhoan textarea:focus,
+.infoUser input:focus,
+.table-footer input:focus,
+.table-footer select:focus,
+.overlayTable input:focus,
+table input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--mau-chinh-focus);
+    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.14);
+}
+
+button:not(.owl-dot):not(.owl-prev):not(.owl-next),
+.button,
+.dropbtn,
+.input-search button,
+.buy_now,
+.xemTatCa,
+.taikhoan .button,
+.listSanPham button,
+.table-footer button,
+.overlayTable button,
+table button {
+    min-height: 44px;
+    border: 1px solid transparent;
+    border-radius: var(--bo-pill);
+    color: #ffffff;
+    background: var(--mau-chinh);
+    font-size: var(--chu-caption);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition: color var(--chuyen-dong-nhanh), background-color var(--chuyen-dong-nhanh), border-color var(--chuyen-dong-nhanh), transform var(--chuyen-dong-nhanh), box-shadow var(--chuyen-dong-nhanh);
+}
+
+button:not(.owl-dot):not(.owl-prev):not(.owl-next):hover,
+.button:hover,
+.dropbtn:hover,
+.input-search button:hover,
+.buy_now:hover,
+.xemTatCa:hover,
+.taikhoan .button:hover,
+.listSanPham button:hover,
+.table-footer button:hover,
+.overlayTable button:hover,
+table button:hover {
+    color: #ffffff;
+    background: var(--mau-chinh-focus);
+}
+
+.input-search button {
+    height: 100%;
+    border-radius: 0 var(--bo-pill) var(--bo-pill) 0;
+}
+
+.dropbtn {
+    padding: 10px 18px;
+}
+
+.dropdown:hover .dropbtn {
+    background: var(--mau-chinh-focus);
+}
+
+.dropdown-content {
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-lg);
+    background-color: rgba(255, 255, 255, 0.92);
+    box-shadow: var(--bong-noi-nhe);
+    backdrop-filter: saturate(180%) blur(20px);
+}
+
+.dropdown-content a {
+    color: var(--mau-den);
+}
+
+.dropdown-content a:hover {
+    color: #ffffff;
+    background-color: var(--mau-chinh);
+}
+
+.choosedFilter a {
+    border-radius: var(--bo-pill);
+    background: var(--mau-chinh);
+}
+
+.sanPham {
+    width: 220px;
+    margin: var(--kc-sm);
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-lg);
+    background: var(--mau-nen);
+    overflow: hidden;
+    box-shadow: none;
+    transition: border-color var(--chuyen-dong-vua), transform var(--chuyen-dong-vua), box-shadow var(--chuyen-dong-vua);
+}
+
+.sanPham:hover {
+    border-color: var(--mau-vien-ro);
+    box-shadow: var(--bong-noi-nhe);
+    transform: translateY(-2px);
+}
+
+.sanPham a {
+    height: 380px;
+    padding: var(--kc-lg);
+}
+
+.sanPham a img {
+    width: 190px;
+    height: 190px;
+    object-fit: contain;
+    filter: drop-shadow(3px 5px 18px rgba(0, 0, 0, 0.18));
+}
+
+.sanPham a:hover > img {
+    margin: 15px auto;
+}
+
+.sanPham h3 {
+    color: var(--mau-den);
+    font-size: var(--chu-body);
+    font-weight: 600;
+    line-height: 1.24;
+    letter-spacing: -0.01em;
+}
+
+.sanPham a:hover h3 {
+    color: var(--mau-chinh);
+}
+
+.sanPham strong,
+.area_price strong {
+    color: var(--mau-den);
+    font-size: var(--chu-body);
+    font-weight: 600;
+}
+
+.sanPham a .price span,
+.ratingresult span,
+.area_price span {
+    color: var(--mau-chu-phu);
+}
+
+.sanPham label {
+    border-radius: var(--bo-pill);
+    padding: 3px 9px;
+    font-size: var(--chu-nho);
+    top: 205px;
+}
+
+button.themvaogio {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-pill);
+    color: var(--mau-den);
+    background: var(--mau-nen-ngoc);
+}
+
+button.themvaogio:hover {
+    color: #ffffff;
+    background: var(--mau-chinh);
+    box-shadow: none;
+}
+
+.khungSanPham {
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-lg);
+    background: var(--mau-nen-phu);
+    overflow: hidden;
+}
+
+.khungSanPham h3.tenKhung {
+    padding: var(--kc-xs) var(--kc-lg);
+    border-radius: var(--bo-pill);
+    background: var(--mau-den);
+}
+
+.xemTatCa {
+    color: #ffffff;
+    background: var(--mau-chinh);
+}
+
+.chitietSanpham {
+    background: var(--mau-nen);
+    border-radius: var(--bo-lg);
+}
+
+.buy_now {
+    display: block;
+    text-align: center;
+}
+
+.listSanPham {
+    width: min(1180px, calc(100% - 32px));
+    margin: var(--kc-xl) auto;
+    border-radius: var(--bo-lg);
+    overflow: hidden;
+    background: var(--mau-nen);
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: var(--bong-noi-nhe);
+}
+
+.listSanPham th {
+    background: var(--mau-den);
+}
+
+.listSanPham tr:last-child {
+    background-color: var(--mau-nen-phu);
+}
+
+.thanhtoan,
+.xoaHet {
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.thanhtoan {
+    background: var(--mau-chinh);
+}
+
+.xoaHet {
+    background: var(--mau-den);
+}

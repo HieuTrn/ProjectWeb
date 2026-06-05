@@ -1,11 +1,11 @@
-window.onload = function () {
+window.onload = () => taiSanPhamVaChay(() => {
 	khoiTao();
 
 	// Thêm hình vào banner
-	addBanner("img/banners/banner0.gif", "img/banners/banner0.gif");
+	addBanner("../img/banners/banner0.gif", "../img/banners/banner0.gif");
 	var numBanner = 1; // Số lượng hình banner
 	for (var i = 1; i <= numBanner; i++) {
-		var linkimg = "img/banners/banner" + i + ".png";
+		var linkimg = "../img/banners/banner" + i + ".png";
 		addBanner(linkimg, linkimg);
 	}
 
@@ -89,7 +89,7 @@ window.onload = function () {
 
 	// Thêm filter đã chọn
 	addAllChoosedFilter();
-};
+});
 
 var soLuongSanPhamMaxTrongMotTrang = 15;
 
@@ -306,8 +306,20 @@ function timKiemTheoCongTySanXuat(list, tenCongTy, soluong) {
 	if (soluong < list.length) count = soluong;
 	else count = list.length;
 
+	var tenCongTyUpper = tenCongTy.toUpperCase();
 	for (var i = 0; i < list.length; i++) {
-		if (list[i].company.toUpperCase().indexOf(tenCongTy.toUpperCase()) >= 0) {
+		var companyUpper = (list[i].company || '').toUpperCase();
+		var coHopLe = false;
+		if (companyUpper.indexOf(tenCongTyUpper) >= 0) {
+			coHopLe = true;
+		} else if (companyUpper === 'APPLE') {
+			if (list[i].name.toUpperCase().indexOf(tenCongTyUpper) >= 0) {
+				coHopLe = true;
+			} else if (tenCongTyUpper === 'APPLE WATCH' && list[i].name.toUpperCase().indexOf('WATCH') >= 0) {
+				coHopLe = true;
+			}
+		}
+		if (coHopLe) {
 			result.push(list[i]);
 			count--;
 			if (count <= 0) break;

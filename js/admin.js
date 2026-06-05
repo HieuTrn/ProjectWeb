@@ -1,13 +1,10 @@
 var TONGTIEN = 0;
 
-window.onload = function () {
-    // get data từ localstorage
-    list_products = getListProducts() || list_products;
-    adminInfo = getListAdmin() || adminInfo;
-
+window.onload = () => taiSanPhamVaChay(() => {
     addEventChangeTab();
 
-    if (window.localStorage.getItem('admin')) {
+    const user = getCurrentUser();
+    if (user && user.role === 'admin') {
         addTableProducts();
         addTableDonHang();
         addTableKhachHang();
@@ -15,12 +12,12 @@ window.onload = function () {
 
         openTab('Trang Chủ')
     } else {
-        document.body.innerHTML = `<h1 style="color:red; with:100%; text-align:center; margin: 50px;"> Truy cập bị từ chối.. </h1>`;
+        document.body.innerHTML = `<h1 style="color:red; width:100%; text-align:center; margin: 50px;"> Truy cập bị từ chối.. </h1>`;
     }
-}
+});
 
 function logOutAdmin() {
-    window.localStorage.removeItem('admin');
+    logOut();
 }
 
 function getListRandomColor(length) {
@@ -73,66 +70,41 @@ function createChartConfig(
     };
 }
 
-function addThongKe() {
-    var danhSachDonHang = getListDonHang(true);
+async function addThongKe() {
+    var tc1 = document.getElementById('myChart1');
+    var tc2 = document.getElementById('myChart2');
+    if (!tc1 || !tc2) return;
 
-    var thongKeHang = {}; // Thống kê hãng
+    try {
+        const response = await fetch('http://localhost:3000/api/admin/stats', {
+            credentials: 'include'
+        });
+        const result = await response.json();
+        if (!result.success) {
+            console.error(result.error);
+            return;
+        }
+        var thongKeHang = result.data;
+        let colors = getListRandomColor(Object.keys(thongKeHang).length);
 
-    danhSachDonHang.forEach(donHang => {
-        // Nếu đơn hàng bị huỷ thì không tính vào số lượng bán ra
-        if(donHang.tinhTrang === 'Đã hủy') return;
+        addChart('myChart1', createChartConfig(
+            'Số lượng bán ra',
+            'bar', 
+            Object.keys(thongKeHang), 
+            Object.values(thongKeHang).map(_ => _.soLuongBanRa),
+            colors,
+        ));
 
-        // Lặp qua từng sản phẩm trong đơn hàng
-        donHang.sp.forEach(sanPhamTrongDonHang => {
-            let tenHang = sanPhamTrongDonHang.sanPham.company;
-            let soLuong = sanPhamTrongDonHang.soLuong;
-            let donGia = stringToNum(sanPhamTrongDonHang.sanPham.price);
-            let thanhTien = soLuong * donGia;
-
-            if(!thongKeHang[tenHang]) {
-                thongKeHang[tenHang] = {
-                    soLuongBanRa: 0,
-                    doanhThu: 0,
-                }
-            }
-
-            thongKeHang[tenHang].soLuongBanRa += soLuong;
-            thongKeHang[tenHang].doanhThu += thanhTien;
-        })
-    })
-
-
-    // Lấy mảng màu ngẫu nhiên để vẽ đồ thị
-    let colors = getListRandomColor(Object.keys(thongKeHang).length);
-
-    // Thêm thống kê
-    addChart('myChart1', createChartConfig(
-        'Số lượng bán ra',
-        'bar', 
-        Object.keys(thongKeHang), 
-        Object.values(thongKeHang).map(_ =>  _.soLuongBanRa),
-        colors,
-    ));
-
-    addChart('myChart2', createChartConfig(
-        'Doanh thu',
-        'doughnut', 
-        Object.keys(thongKeHang), 
-        Object.values(thongKeHang).map(_ =>  _.doanhThu),
-        colors,
-    ));
-
-    // var doughnutChart = copyObject(dataChart);
-    //     doughnutChart.type = 'doughnut';
-    // addChart('myChart2', doughnutChart);
-
-    // var pieChart = copyObject(dataChart);
-    //     pieChart.type = 'pie';
-    // addChart('myChart3', pieChart);
-
-    // var lineChart = copyObject(dataChart);
-    //     lineChart.type = 'line';
-    // addChart('myChart4', lineChart);
+        addChart('myChart2', createChartConfig(
+            'Doanh thu',
+            'doughnut', 
+            Object.keys(thongKeHang), 
+            Object.values(thongKeHang).map(_ => _.doanhThu),
+            colors,
+        ));
+    } catch (loi) {
+        console.error(loi);
+    }
 }
 
 // ======================= Các Tab =========================
@@ -301,95 +273,78 @@ function layThongTinSanPhamTuTable(id) {
         return false;
     }
 }
-function themSanPham() {
+async function themSanPham() {
     var newSp = layThongTinSanPhamTuTable('khungThemSanPham');
     if(!newSp) return;
 
-    for(var p of list_products) {
-        if(p.masp == newSp.masp) {
-            alert('Mã sản phẩm bị trùng !!');
-            return false;
+    try {
+        const phanHoi = await fetch('http://localhost:3000/api/admin/products', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(newSp)
+        });
+        const ketQua = await phanHoi.json();
+        if (ketQua.success) {
+            alert('Thêm sản phẩm "' + newSp.name + '" thành công.');
+            document.getElementById('khungThemSanPham').style.transform = 'scale(0)';
+            await taiDanhSachSanPhamTuApi();
+            addTableProducts();
+        } else {
+            alert(ketQua.error.message || 'Lỗi khi thêm sản phẩm');
         }
-
-        if(p.name == newSp.name) {
-            alert('Tên sản phẩm bị trùng !!');
-            return false;
-        }
+    } catch (loi) {
+        console.error('Lỗi khi thêm sản phẩm:', loi);
+        alert('Không thể kết nối tới server!');
     }
-     // Them san pham vao list_products
-     list_products.push(newSp);
-
-     // Lưu vào localstorage
-     setListProducts(list_products);
- 
-     // Vẽ lại table
-     addTableProducts();
-
-    alert('Thêm sản phẩm "' + newSp.name + '" thành công.');
-    document.getElementById('khungThemSanPham').style.transform = 'scale(0)';
-}
-function autoMaSanPham(company) {
-    // hàm tự tạo mã cho sản phẩm mới
-    if(!company) company = document.getElementsByName('chonCompany')[0].value;
-    var index = 0;
-    for (var i = 0; i < list_products.length; i++) {
-        if (list_products[i].company == company) {
-            index++;
-        }
-    }
-    document.getElementById('maspThem').value = company.substring(0, 3) + index;
 }
 
-// Xóa
-function xoaSanPham(masp, tensp) {
+async function xoaSanPham(masp, tensp) {
     if (window.confirm('Bạn có chắc muốn xóa ' + tensp)) {
-        // Xóa
-        for(var i = 0; i < list_products.length; i++) {
-            if(list_products[i].masp == masp) {
-                list_products.splice(i, 1);
+        try {
+            const phanHoi = await fetch('http://localhost:3000/api/admin/products?masp=' + masp, {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+            const ketQua = await phanHoi.json();
+            if (ketQua.success) {
+                alert('Xóa sản phẩm thành công.');
+                await taiDanhSachSanPhamTuApi();
+                addTableProducts();
+            } else {
+                alert(ketQua.error.message || 'Lỗi khi xóa sản phẩm');
             }
+        } catch (loi) {
+            console.error('Lỗi khi xóa sản phẩm:', loi);
+            alert('Không thể kết nối tới server!');
         }
-
-        // Lưu vào localstorage
-        setListProducts(list_products);
-
-        // Vẽ lại table 
-        addTableProducts();
     }
 }
 
-// Sửa
-function suaSanPham(masp) {
+async function suaSanPham(masp) {
     var sp = layThongTinSanPhamTuTable('khungSuaSanPham');
     if(!sp) return;
-    
-    for(var p of list_products) {
-        if(p.masp == masp && p.masp != sp.masp) {
-            alert('Mã sản phẩm bị trùng !!');
-            return false;
-        }
 
-        if(p.name == sp.name && p.masp != sp.masp) {
-            alert('Tên sản phẩm bị trùng !!');
-            return false;
+    try {
+        const phanHoi = await fetch('http://localhost:3000/api/admin/products?masp=' + masp, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(sp)
+        });
+        const ketQua = await phanHoi.json();
+        if (ketQua.success) {
+            alert('Sửa ' + sp.name + ' thành công');
+            document.getElementById('khungSuaSanPham').style.transform = 'scale(0)';
+            await taiDanhSachSanPhamTuApi();
+            addTableProducts();
+        } else {
+            alert(ketQua.error.message || 'Lỗi khi sửa sản phẩm');
         }
+    } catch (loi) {
+        console.error('Lỗi khi sửa sản phẩm:', loi);
+        alert('Không thể kết nối tới server!');
     }
-    // Sửa
-    for(var i = 0; i < list_products.length; i++) {
-        if(list_products[i].masp == masp) {
-            list_products[i] = sp;
-        }
-    }
-
-    // Lưu vào localstorage
-    setListProducts(list_products);
-
-    // Vẽ lại table
-    addTableProducts();
-
-    alert('Sửa ' + sp.name + ' thành công');
-
-    document.getElementById('khungSuaSanPham').style.transform = 'scale(0)';
 }
 
 function addKhungSuaSanPham(masp) {
@@ -555,121 +510,80 @@ function getValueOfTypeInTable_SanPham(tr, loai) {
 
 // ========================= Đơn Hàng ===========================
 // Vẽ bảng
-function addTableDonHang() {
+async function addTableDonHang() {
     var tc = document.getElementsByClassName('donhang')[0].getElementsByClassName('table-content')[0];
     var s = `<table class="table-outline hideImg">`;
 
-    var listDH = getListDonHang();
+    try {
+        const response = await fetch('http://localhost:3000/api/admin/orders', {
+            credentials: 'include'
+        });
+        const result = await response.json();
+        if (!result.success) {
+            tc.innerHTML = `<h3 style="color:red; text-align:center;">` + result.error.message + `</h3>`;
+            return;
+        }
+        var listDH = result.data;
 
-    TONGTIEN = 0;
-    for (var i = 0; i < listDH.length; i++) {
-        var d = listDH[i];
-        s += `<tr>
-            <td style="width: 5%">` + (i+1) + `</td>
-            <td style="width: 13%">` + d.ma + `</td>
-            <td style="width: 7%">` + d.khach + `</td>
-            <td style="width: 20%">` + d.sp + `</td>
-            <td style="width: 15%">` + d.tongtien + `</td>
-            <td style="width: 10%">` + d.ngaygio + `</td>
-            <td style="width: 10%">` + d.tinhTrang + `</td>
-            <td style="width: 10%">
-                <div class="tooltip">
-                    <i class="fa fa-check" onclick="duyet('`+d.ma+`', true)"></i>
-                    <span class="tooltiptext">Duyệt</span>
-                </div>
-                <div class="tooltip">
-                    <i class="fa fa-remove" onclick="duyet('`+d.ma+`', false)"></i>
-                    <span class="tooltiptext">Hủy</span>
-                </div>
-                
-            </td>
-        </tr>`;
-        TONGTIEN += stringToNum(d.tongtien);
-    }
-
-    s += `</table>`;
-    tc.innerHTML = s;
-}
-
-function getListDonHang(traVeDanhSachSanPham = false) {
-    var u = getListUser();
-    var result = [];
-    for(var i = 0; i < u.length; i++) {
-        for(var j = 0; j < u[i].donhang.length; j++) {
-            // Tổng tiền
-            var tongtien = 0;
-            for(var s of u[i].donhang[j].sp) {
-                var timsp = timKiemTheoMa(list_products, s.ma);
-                if(timsp.promo.name == 'giareonline') tongtien += stringToNum(timsp.promo.value);
-                else tongtien += stringToNum(timsp.price);
-            }
-
-            // Ngày giờ
-            var x = new Date(u[i].donhang[j].ngaymua).toLocaleString();
-
-            // Các sản phẩm - dạng html
+        TONGTIEN = 0;
+        for (var i = 0; i < listDH.length; i++) {
+            var d = listDH[i];
             var sps = '';
-            for(var s of u[i].donhang[j].sp) {
-                sps += `<p style="text-align: right">`+(timKiemTheoMa(list_products, s.ma).name + ' [' + s.soluong + ']') + `</p>`;
+            for(var sItem of d.items) {
+                sps += `<p style="text-align: right">` + sItem.name + ' [' + sItem.soluong + '] </p>';
             }
 
-            // Các sản phẩm - dạng mảng
-            var danhSachSanPham = [];
-            for(var s of u[i].donhang[j].sp) {
-                danhSachSanPham.push({
-                    sanPham: timKiemTheoMa(list_products, s.ma),
-                    soLuong: s.soluong,
-                });
+            s += `<tr>
+                <td style="width: 5%">` + (i+1) + `</td>
+                <td style="width: 13%">` + d._id + `</td>
+                <td style="width: 7%">` + d.khachhang + `</td>
+                <td style="width: 20%">` + sps + `</td>
+                <td style="width: 15%">` + numToString(d.tongTien) + `</td>
+                <td style="width: 10%">` + new Date(d.ngayMua).toLocaleString() + `</td>
+                <td style="width: 10%">` + d.tinhTrang + `</td>
+                <td style="width: 10%">
+                    <div class="tooltip">
+                        <i class="fa fa-check" onclick="duyet('`+d._id+`', true)"></i>
+                        <span class="tooltiptext">Duyệt</span>
+                    </div>
+                    <div class="tooltip">
+                        <i class="fa fa-remove" onclick="duyet('`+d._id+`', false)"></i>
+                        <span class="tooltiptext">Hủy</span>
+                    </div>
+                </td>
+            </tr>`;
+            if (d.tinhTrang !== 'Đã hủy') {
+                TONGTIEN += d.tongTien;
             }
-
-            // Lưu vào result
-            result.push({
-                "ma": u[i].donhang[j].ngaymua.toString(),
-                "khach": u[i].username,
-                "sp": traVeDanhSachSanPham ? danhSachSanPham : sps,
-                "tongtien": numToString(tongtien),
-                "ngaygio": x,
-                "tinhTrang": u[i].donhang[j].tinhTrang
-            });
         }
+
+        s += `</table>`;
+        tc.innerHTML = s;
+    } catch (loi) {
+        console.error(loi);
+        tc.innerHTML = `<h3 style="color:red; text-align:center;">Không thể kết nối đến server</h3>`;
     }
-    return result;
 }
 
-// Duyệt
-function duyet(maDonHang, duyetDon) {
-    var u = getListUser();
-    for(var i = 0; i < u.length; i++) {
-        for(var j = 0; j < u[i].donhang.length; j++) {
-            if(u[i].donhang[j].ngaymua == maDonHang) {
-                if(duyetDon) {
-                    if(u[i].donhang[j].tinhTrang == 'Đang chờ xử lý') {
-                        u[i].donhang[j].tinhTrang = 'Đã giao hàng';
-                    
-                    } else if(u[i].donhang[j].tinhTrang == 'Đã hủy') {
-                        alert('Không thể duyệt đơn đã hủy !');
-                        return;
-                    }
-                } else {
-                    if(u[i].donhang[j].tinhTrang == 'Đang chờ xử lý') {
-                        if(window.confirm('Bạn có chắc muốn hủy đơn hàng này. Hành động này sẽ không thể khôi phục lại !'))
-                            u[i].donhang[j].tinhTrang = 'Đã hủy';
-                    
-                    } else if(u[i].donhang[j].tinhTrang == 'Đã giao hàng') {
-                        alert('Không thể hủy đơn hàng đã giao !');
-                        return;
-                    }
-                }
-                break;
-            }
+async function duyet(maDonHang, duyetDon) {
+    try {
+        const response = await fetch('http://localhost:3000/api/admin/orders/status', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ orderId: maDonHang, duyetDon })
+        });
+        const result = await response.json();
+        if (result.success) {
+            alert('Cập nhật trạng thái đơn hàng thành công');
+            await addTableDonHang();
+        } else {
+            alert(result.error.message || 'Lỗi khi cập nhật đơn hàng');
         }
+    } catch (loi) {
+        console.error(loi);
+        alert('Không thể kết nối tới server!');
     }
-
-    // lưu lại
-    setListUser(u);
-
-    // vẽ lại
-    addTableDonHang();
 }
 
 function locDonHangTheoKhoangNgay() {
@@ -734,46 +648,57 @@ function getValueOfTypeInTable_DonHang(tr, loai) {
 
 // ====================== Khách Hàng =============================
 // Vẽ bảng
-function addTableKhachHang() {
+async function addTableKhachHang() {
     var tc = document.getElementsByClassName('khachhang')[0].getElementsByClassName('table-content')[0];
     var s = `<table class="table-outline hideImg">`;
 
-    var listUser = getListUser();
+    try {
+        const response = await fetch('http://localhost:3000/api/admin/users', {
+            credentials: 'include'
+        });
+        const result = await response.json();
+        if (!result.success) {
+            tc.innerHTML = `<h3 style="color:red; text-align:center;">` + result.error.message + `</h3>`;
+            return;
+        }
+        var listUser = result.data;
 
-    for (var i = 0; i < listUser.length; i++) {
-        var u = listUser[i];
-        s += `<tr>
-            <td style="width: 5%">` + (i+1) + `</td>
-            <td style="width: 15%">` + u.ho + ' ' + u.ten + `</td>
-            <td style="width: 20%">` + u.email + `</td>
-            <td style="width: 20%">` + u.username + `</td>
-            <td style="width: 10%">` + u.pass + `</td>
-            <td style="width: 10%">
-                <div class="tooltip">
-                    <label class="switch">
-                        <input type="checkbox" `+(u.off?'':'checked')+` onclick="voHieuHoaNguoiDung(this, '`+u.username+`')">
-                        <span class="slider round"></span>
-                    </label>
-                    <span class="tooltiptext">`+(u.off?'Mở':'Khóa')+`</span>
-                </div>
-                <div class="tooltip">
-                    <i class="fa fa-remove" onclick="xoaNguoiDung('`+u.username+`')"></i>
-                    <span class="tooltiptext">Xóa</span>
-                </div>
-            </td>
-        </tr>`;
+        for (var i = 0; i < listUser.length; i++) {
+            var u = listUser[i];
+            s += `<tr>
+                <td style="width: 5%">` + (i+1) + `</td>
+                <td style="width: 15%">` + u.ho + ' ' + u.ten + `</td>
+                <td style="width: 20%">` + u.email + `</td>
+                <td style="width: 20%">` + u.username + `</td>
+                <td style="width: 10%">*******</td>
+                <td style="width: 10%">
+                    <div class="tooltip">
+                        <label class="switch">
+                            <input type="checkbox" `+(u.off?'':'checked')+` onclick="voHieuHoaNguoiDung(this, '`+u.username+`')">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="tooltiptext">`+(u.off?'Mở':'Khóa')+`</span>
+                    </div>
+                    <div class="tooltip">
+                        <i class="fa fa-remove" onclick="xoaNguoiDung('`+u.username+`')"></i>
+                        <span class="tooltiptext">Xóa</span>
+                    </div>
+                </td>
+            </tr>`;
+        }
+
+        s += `</table>`;
+        tc.innerHTML = s;
+    } catch (loi) {
+        console.error(loi);
+        tc.innerHTML = `<h3 style="color:red; text-align:center;">Không thể kết nối đến server</h3>`;
     }
-
-    s += `</table>`;
-    tc.innerHTML = s;
 }
 
-// Tìm kiếm
 function timKiemNguoiDung(inp) {
     var kieuTim = document.getElementsByName('kieuTimKhachHang')[0].value;
     var text = inp.value;
 
-    // Lọc
     var vitriKieuTim = {'ten':1, 'email':2, 'taikhoan':3};
 
     var listTr_table = document.getElementsByClassName('khachhang')[0].getElementsByClassName('table-content')[0].getElementsByTagName('tr');
@@ -792,36 +717,49 @@ function openThemNguoiDung() {
     window.alert('Not Available!');
 }
 
-// vô hiệu hóa người dùng (tạm dừng, không cho đăng nhập vào)
-function voHieuHoaNguoiDung(inp, taikhoan) {
-    var listUser = getListUser();
-    for(var u of listUser) {
-        if(u.username == taikhoan) {
-            let value = !inp.checked
-            u.off = value;
-            setListUser(listUser);
-            
-            setTimeout(() => alert(`${value ? 'Khoá' : 'Mở khoá'} tải khoản ${u.username} thành công.`), 500);
-            break;
+async function voHieuHoaNguoiDung(inp, taikhoan) {
+    let value = !inp.checked;
+    try {
+        const response = await fetch('http://localhost:3000/api/admin/users/status', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ username: taikhoan, off: value })
+        });
+        const result = await response.json();
+        if (result.success) {
+            alert((value ? 'Khoá' : 'Mở khoá') + ' tài khoản ' + taikhoan + ' thành công.');
+            var span = inp.parentElement.nextElementSibling;
+            span.innerHTML = (inp.checked?'Khóa':'Mở');
+        } else {
+            alert(result.error.message || 'Lỗi khi cập nhật trạng thái');
+            inp.checked = !inp.checked;
         }
+    } catch (loi) {
+        console.error(loi);
+        alert('Không thể kết nối tới server!');
+        inp.checked = !inp.checked;
     }
-    var span = inp.parentElement.nextElementSibling;
-        span.innerHTML = (inp.checked?'Khóa':'Mở');
 }
 
-// Xóa người dùng
-function xoaNguoiDung(taikhoan) {
+async function xoaNguoiDung(taikhoan) {
     if(window.confirm('Xác nhận xóa '+taikhoan+'? \nMọi dữ liệu về '+taikhoan+' sẽ mất! Bao gồm cả những đơn hàng của '+taikhoan)) {
-        var listuser = getListUser();
-        for(var i = 0; i < listuser.length; i++) {
-            if(listuser[i].username == taikhoan) {
-                listuser.splice(i, 1); // xóa
-                setListUser(listuser); // lưu thay đổi
-                localStorage.removeItem('CurrentUser'); // đăng xuất khỏi tài khoản hiện tại (current user)
-                addTableKhachHang(); // vẽ lại bảng khách hàng
-                addTableDonHang(); // vẽ lại bảng đơn hàng
-                return;
+        try {
+            const response = await fetch('http://localhost:3000/api/admin/users?username=' + encodeURIComponent(taikhoan), {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert('Xóa tài khoản thành công');
+                await addTableKhachHang();
+                await addTableDonHang();
+            } else {
+                alert(result.error.message || 'Lỗi khi xóa người dùng');
             }
+        } catch (loi) {
+            console.error(loi);
+            alert('Không thể kết nối tới server!');
         }
     }
 }

@@ -1,0 +1,30 @@
+.infoUser,
+.listDonHang {
+    width: min(960px, calc(100% - 32px));
+    margin: var(--kc-xl) auto;
+}
+
+.infoUser table {
+    border-radius: var(--bo-lg);
+    overflow: hidden;
+    background: var(--mau-nen);
+    box-shadow: var(--bong-noi-nhe);
+}
+
+.infoUser table th {
+    background: var(--mau-den);
+}
+
+.infoUser input {
+    min-height: 44px;
+    border: 1px solid var(--mau-vien);
+}
+
+.infoUser i {
+    color: var(--mau-chinh);
+    cursor: pointer;
+}
+
+.listDonHang .listSanPham {
+    width: 100%;
+}

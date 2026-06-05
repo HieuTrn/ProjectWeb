@@ -1,0 +1,78 @@
+* {
+    box-sizing: border-box;
+    font-family: var(--font-noi-dung);
+}
+
+html {
+    color: var(--mau-den);
+    background: var(--mau-nen-phu);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    color: var(--mau-den);
+    background: var(--mau-nen-phu);
+    font-size: var(--chu-body);
+    line-height: 1.47;
+    letter-spacing: -0.01em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-hien-thi);
+    color: var(--mau-den);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+a {
+    color: var(--mau-chinh);
+    transition: color var(--chuyen-dong-nhanh), background-color var(--chuyen-dong-nhanh), border-color var(--chuyen-dong-nhanh), transform var(--chuyen-dong-nhanh);
+}
+
+img {
+    max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--mau-chinh-focus);
+    outline-offset: 2px;
+}
+
+button:active,
+.button:active,
+.dropbtn:active,
+.buy_now:active,
+.xemTatCa:active,
+.themvaogio:active {
+    transform: scale(0.97);
+}
+
+::selection {
+    color: #ffffff;
+    background: var(--mau-chinh);
+}

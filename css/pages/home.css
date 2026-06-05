@@ -1,0 +1,130 @@
+.store-hero {
+    min-height: 520px;
+    display: grid;
+    place-items: center;
+    padding: 96px var(--kc-xl);
+    margin: var(--kc-xl) 0;
+    text-align: center;
+    color: #ffffff;
+    background:
+        radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.18), transparent 30%),
+        linear-gradient(180deg, #101012 0%, #272729 100%);
+    border-radius: 0;
+}
+
+.store-hero > * {
+    max-width: 820px;
+}
+
+.store-hero .hero-eyebrow {
+    margin-bottom: var(--kc-md);
+    color: rgba(255, 255, 255, 0.72);
+    font-size: var(--chu-tagline);
+    font-weight: 600;
+}
+
+.store-hero h1 {
+    margin-bottom: var(--kc-md);
+    color: #ffffff;
+    font-size: var(--chu-hero);
+    line-height: 1.07;
+    letter-spacing: -0.02em;
+}
+
+.store-hero p {
+    margin: 0 auto var(--kc-lg);
+    color: rgba(255, 255, 255, 0.82);
+    font-size: var(--chu-lead);
+    line-height: 1.18;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--kc-sm);
+}
+
+.hero-actions a {
+    min-width: 132px;
+    padding: 11px 22px;
+    border-radius: var(--bo-pill);
+    color: #ffffff;
+    background: var(--mau-chinh);
+}
+
+.hero-actions a + a {
+    color: var(--mau-chinh-dark);
+    background: transparent;
+    border: 1px solid var(--mau-chinh-dark);
+}
+
+.banner {
+    margin: var(--kc-xl) 0;
+    border-radius: var(--bo-lg);
+    overflow: hidden;
+    background: var(--mau-nen);
+}
+
+.companyMenu {
+    margin: var(--kc-xl) 0;
+    gap: var(--kc-sm);
+}
+
+.companyMenu a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 112px;
+    padding: var(--kc-sm) var(--kc-md);
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-pill);
+    background: var(--mau-nen);
+}
+
+.contain-khungSanPham {
+    padding-bottom: var(--kc-xl);
+}
+
+.khungSanPham {
+    margin: 64px 0;
+    padding: var(--kc-xl) var(--kc-md) var(--kc-lg);
+}
+
+.khungSanPham:nth-of-type(even) {
+    background: var(--mau-den);
+}
+
+.khungSanPham:nth-of-type(even) .tenKhung {
+    color: var(--mau-den);
+    background: var(--mau-nen) !important;
+}
+
+.khungSanPham:nth-of-type(even) .xemTatCa {
+    color: var(--mau-chinh-dark);
+    background: transparent;
+    border-color: var(--mau-chinh-dark) !important;
+}
+
+.listSpTrongKhung {
+    gap: var(--kc-sm);
+}
+
+@media (max-width: 640px) {
+    .store-hero {
+        min-height: 420px;
+        padding: 72px var(--kc-md);
+    }
+
+    .store-hero h1 {
+        font-size: 34px;
+    }
+
+    .store-hero p {
+        font-size: var(--chu-body);
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+}

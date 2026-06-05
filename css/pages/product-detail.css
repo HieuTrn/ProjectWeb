@@ -1,0 +1,77 @@
+.chitietSanpham {
+    max-width: 1180px;
+    margin: var(--kc-xl) auto 100px !important;
+    padding: var(--kc-xl);
+    box-shadow: var(--bong-noi-nhe);
+}
+
+.chitietSanpham h1 {
+    margin-bottom: var(--kc-sm);
+    font-size: var(--chu-tieu-de);
+    line-height: 1.1;
+    text-align: center;
+}
+
+.chitietSanpham .rating {
+    margin-bottom: var(--kc-xl);
+    text-align: center;
+}
+
+.rowdetail {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) minmax(320px, 0.9fr) minmax(280px, 0.8fr);
+    gap: var(--kc-xl);
+    align-items: start;
+}
+
+.picture {
+    display: grid;
+    place-items: center;
+    min-height: 420px;
+    border-radius: var(--bo-lg);
+    background: var(--mau-nen-phu);
+}
+
+.picture img {
+    max-height: 360px;
+    object-fit: contain;
+    filter: drop-shadow(3px 5px 24px rgba(0, 0, 0, 0.2));
+}
+
+.price_sale,
+.info_product {
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-lg);
+    background: var(--mau-nen);
+}
+
+.area_price {
+    padding: var(--kc-lg);
+}
+
+.area_price strong {
+    font-size: var(--chu-muc);
+}
+
+.area_order {
+    padding: 0 var(--kc-lg) var(--kc-lg);
+}
+
+.buy_now {
+    padding: 14px 24px;
+    font-size: var(--chu-body);
+}
+
+.info_product h2 {
+    color: var(--mau-den);
+}
+
+.info_product .info li {
+    border-color: var(--mau-vien);
+}
+
+@media (max-width: 1068px) {
+    .rowdetail {
+        grid-template-columns: 1fr;
+    }
+}

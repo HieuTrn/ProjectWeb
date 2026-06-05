@@ -1,0 +1,42 @@
+body {
+    background: var(--mau-nen-phu);
+}
+
+.listSanPham th,
+.listSanPham td {
+    padding: var(--kc-md);
+    font-size: var(--chu-caption);
+}
+
+.listSanPham .soluong {
+    min-width: 160px;
+}
+
+.listSanPham .soluong button {
+    width: 36px;
+    min-height: 36px;
+}
+
+.listSanPham .soluong input {
+    width: 52px;
+    height: 36px;
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-pill);
+    text-align: center;
+}
+
+.listSanPham td a {
+    color: var(--mau-den);
+    font-weight: 600;
+}
+
+.listSanPham td a:hover {
+    color: var(--mau-chinh);
+}
+
+@media (max-width: 833px) {
+    .listSanPham {
+        display: block;
+        overflow-x: auto;
+    }
+}
