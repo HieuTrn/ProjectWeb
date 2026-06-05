@@ -45,7 +45,7 @@ function phanTich_URL_chiTietSanPham() {
     var divChiTiet = document.getElementsByClassName('chitietSanpham')[0];
 
     // Đổi title
-    document.title = nameProduct + ' - Thế giới điện thoại';
+    document.title = nameProduct + ' - Hoàngphan Store';
 
     // Cập nhật tên h1
     var h1 = divChiTiet.getElementsByTagName('h1')[0];

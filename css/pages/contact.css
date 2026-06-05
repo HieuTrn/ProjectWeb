@@ -1,0 +1,123 @@
+.body-lienhe {
+    max-width: 1180px;
+    margin: var(--kc-xl) auto;
+    padding: var(--kc-xl);
+    background: var(--mau-nen);
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-lg);
+    box-shadow: var(--bong-noi-nhe);
+}
+
+.lienhe-header {
+    margin-bottom: var(--kc-lg);
+    padding-bottom: var(--kc-sm);
+    border-bottom: 1px solid var(--mau-vien);
+    font-family: var(--font-hien-thi);
+    font-size: var(--chu-lead);
+    color: var(--mau-den);
+    font-weight: 600;
+}
+
+.lienhe-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--kc-xl);
+    margin-bottom: var(--kc-xl);
+}
+
+.info-left, .info-right {
+    flex: 1;
+    min-width: 280px;
+}
+
+.info-left h2 {
+    font-size: var(--chu-tagline);
+    color: var(--mau-den) !important;
+    margin-bottom: var(--kc-md);
+}
+
+.info-left p {
+    font-size: var(--chu-body);
+    line-height: 1.6;
+    color: var(--mau-chu-phu);
+}
+
+.info-right iframe {
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-lg);
+    overflow: hidden;
+    box-shadow: var(--bong-noi-nhe);
+}
+
+.guithongtin {
+    width: 100%;
+    max-width: 600px;
+    margin-top: var(--kc-lg);
+}
+
+.guithongtin p {
+    font-size: var(--chu-lead) !important;
+    color: var(--mau-den) !important;
+    margin-bottom: var(--kc-xs);
+    font-family: var(--font-hien-thi);
+    font-weight: 600;
+}
+
+.guithongtin form table {
+    width: 100%;
+    border-spacing: 0 var(--kc-sm);
+    border-collapse: separate;
+}
+
+.guithongtin form table td {
+    padding: var(--kc-xs) 0;
+    vertical-align: middle;
+    font-size: var(--chu-caption);
+    color: var(--mau-chu-phu);
+}
+
+.guithongtin form table td:first-child {
+    width: 140px;
+    font-weight: 600;
+    color: var(--mau-den);
+}
+
+.guithongtin form table input,
+.guithongtin form table textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px var(--kc-md);
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-md);
+    background: var(--mau-nen-phu);
+    color: var(--mau-den);
+    transition: border-color var(--chuyen-dong-nhanh), background-color var(--chuyen-dong-nhanh);
+}
+
+.guithongtin form table input:focus,
+.guithongtin form table textarea:focus {
+    outline: none;
+    border-color: var(--mau-chinh-focus);
+    background: var(--mau-nen);
+}
+
+.guithongtin form table button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--bo-pill);
+    background: var(--mau-chinh);
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--chuyen-dong-nhanh);
+}
+
+.guithongtin form table button:hover {
+    background: var(--mau-chinh-focus);
+}
+
+@media (max-width: 768px) {
+    .lienhe-info {
+        flex-direction: column;
+    }
+}

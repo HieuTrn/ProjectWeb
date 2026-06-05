@@ -28,3 +28,78 @@
 .listDonHang .listSanPham {
     width: 100%;
 }
+
+.infoUser table td {
+    padding: var(--kc-sm) var(--kc-md);
+    vertical-align: middle;
+}
+
+.infoUser table td:first-child {
+    font-weight: 600;
+    text-align: right;
+    color: var(--mau-chu-phu);
+}
+
+.infoUser input:read-only {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.infoUser .fa-pencil {
+    text-align: center;
+    border-radius: var(--bo-pill);
+    font-size: var(--chu-caption);
+    padding: 8px 16px;
+    background: var(--mau-nen-phu);
+    color: var(--mau-den);
+    transition: background-color var(--chuyen-dong-nhanh);
+    cursor: pointer;
+    min-width: 70px;
+    border: 1px solid var(--mau-vien);
+}
+
+.infoUser .fa-pencil:hover {
+    background-color: var(--mau-vien);
+}
+
+#khungDoiMatKhau {
+    padding: 0;
+    border-bottom: 1px solid var(--mau-vien);
+    border-top: 1px solid var(--mau-vien);
+}
+
+#khungDoiMatKhau tr td {
+    padding: 0;
+}
+
+#khungDoiMatKhau tr td div {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--chuyen-dong-vua);
+}
+
+#khungDoiMatKhau.active, 
+#khungDoiMatKhau.active tr td {
+    padding: var(--kc-xs) 0;
+}
+
+#khungDoiMatKhau.active td div {
+    max-height: 120px;
+}
+
+#khungDoiMatKhau button {
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--bo-pill);
+    border: none;
+    background-color: var(--mau-chinh);
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--chuyen-dong-nhanh);
+}
+
+#khungDoiMatKhau button:hover {
+    background-color: var(--mau-chinh-focus);
+}

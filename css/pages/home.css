@@ -90,6 +90,21 @@
     padding: var(--kc-xl) var(--kc-md) var(--kc-lg);
 }
 
+.khungSanPham h3.tenKhung {
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    margin: 0 auto var(--kc-xl);
+    padding: 0 var(--kc-xl);
+    transform: none;
+    color: var(--mau-den) !important;
+    background: var(--mau-nen) !important;
+    border: 1px solid var(--mau-vien);
+    box-shadow: var(--bong-noi-nhe);
+}
+
 .khungSanPham:nth-of-type(even) {
     background: var(--mau-den);
 }

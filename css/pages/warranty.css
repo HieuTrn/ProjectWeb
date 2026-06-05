@@ -1,0 +1,62 @@
+table {
+    width: min(1180px, calc(100% - 32px));
+    margin: var(--kc-xl) auto;
+    border-radius: var(--bo-lg);
+    overflow: hidden;
+    background: var(--mau-nen);
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: var(--bong-noi-nhe);
+}
+
+table th,
+table td {
+    padding: var(--kc-md);
+    text-align: left;
+    font-size: var(--chu-caption);
+    border-bottom: 1px solid var(--mau-vien);
+}
+
+table th {
+    background: var(--mau-den);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+table tr:nth-of-type(even) {
+    background-color: var(--mau-nen-phu);
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+td a {
+    color: var(--mau-chinh);
+    font-weight: 600;
+    transition: color var(--chuyen-dong-nhanh);
+}
+
+td a:hover {
+    color: var(--mau-chinh-focus);
+    text-decoration: underline;
+}
+
+.header-table marquee {
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: var(--chu-lead);
+    font-weight: bold;
+    color: var(--mau-chinh);
+    background: var(--mau-nen-ngoc);
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-md);
+    margin: var(--kc-md) auto;
+    max-width: min(1180px, calc(100% - 32px));
+}
+
+.col1 { text-align: center; width: 5%; }
+.col2 { width: 50%; }
+.col3 { width: 25%; }
+.col4 { width: 20%; }

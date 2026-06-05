@@ -530,7 +530,7 @@ function addHeader() {
 	<div class="header group sub-nav-frosted">
         <div class="logo">
             <a href="index.html">
-                <span>Apple Store</span>
+                <span>Hoàngphan Store</span>
             </a>
         </div> <!-- End Logo -->
 
@@ -616,7 +616,7 @@ function addFooter() {
         </section>
     </div>
     <div class="copy-right">
-        <p><a href="index.html">Apple Store</a> - Trải nghiệm mua sắm Apple tinh gọn</p>
+        <p><a href="index.html">Hoàngphan Store</a> - Trải nghiệm mua sắm Apple tinh gọn</p>
     </div>`);
 }
 

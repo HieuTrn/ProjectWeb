@@ -1,0 +1,30 @@
+.page-gt {
+    max-width: 800px;
+    margin: var(--kc-xl) auto;
+    padding: var(--kc-xl);
+    background: var(--mau-nen);
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-lg);
+    box-shadow: var(--bong-noi-nhe);
+}
+
+.page-header {
+    margin-bottom: var(--kc-lg);
+    padding-bottom: var(--kc-sm);
+    border-bottom: 1px solid var(--mau-vien);
+    font-family: var(--font-hien-thi);
+    font-size: var(--chu-lead);
+    color: var(--mau-den);
+    font-weight: 600;
+}
+
+.page-info {
+    font-family: var(--font-noi-dung);
+    font-size: var(--chu-body);
+    line-height: 1.6;
+    color: var(--mau-chu-phu);
+}
+
+.page-info p {
+    margin-bottom: var(--kc-md);
+}

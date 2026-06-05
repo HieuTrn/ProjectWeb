@@ -1,6 +1,18 @@
 const { layDanhSachSanPham, layChiTietSanPhamTheoMasp, layChiTietSanPhamTheoTen, themSanPham, suaSanPham, xoaSanPham } = require('./product.service');
 const userService = require('../users/user.service');
 const { guiThanhCong, guiLoi } = require('../../http/response');
+const mongoose = require('mongoose');
+
+function kiemTraMongoDbSanSang(res) {
+    if (mongoose.connection.readyState === 1) {
+        return true;
+    }
+
+    guiLoi(res, 'SERVICE_UNAVAILABLE', 'MongoDB chưa sẵn sàng', 503, {
+        status: 'DOWN'
+    });
+    return false;
+}
 
 function laySessionIdTuCookie(req) {
     const cookieHeader = req.headers.cookie;
@@ -28,6 +40,8 @@ async function kiemTraQuyenAdmin(req, res) {
 function dangKyRoutes(router) {
     router.get('/api/products', async (req, res) => {
         try {
+            if (!kiemTraMongoDbSanSang(res)) return;
+
             const dsSanPham = await layDanhSachSanPham();
             guiThanhCong(res, dsSanPham);
         } catch (loi) {
@@ -38,6 +52,8 @@ function dangKyRoutes(router) {
 
     router.get('/api/products/detail', async (req, res) => {
         try {
+            if (!kiemTraMongoDbSanSang(res)) return;
+
             const { masp, name } = req.query;
             let sanPham = null;
 
@@ -62,6 +78,8 @@ function dangKyRoutes(router) {
 
     router.post('/api/admin/products', async (req, res) => {
         try {
+            if (!kiemTraMongoDbSanSang(res)) return;
+
             const adminUser = await kiemTraQuyenAdmin(req, res);
             if (!adminUser) return;
 
@@ -75,6 +93,8 @@ function dangKyRoutes(router) {
 
     router.put('/api/admin/products', async (req, res) => {
         try {
+            if (!kiemTraMongoDbSanSang(res)) return;
+
             const adminUser = await kiemTraQuyenAdmin(req, res);
             if (!adminUser) return;
 
@@ -93,6 +113,8 @@ function dangKyRoutes(router) {
 
     router.delete('/api/admin/products', async (req, res) => {
         try {
+            if (!kiemTraMongoDbSanSang(res)) return;
+
             const adminUser = await kiemTraQuyenAdmin(req, res);
             if (!adminUser) return;
 

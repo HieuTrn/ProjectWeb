@@ -32,6 +32,7 @@ h6 {
 
 a {
     color: var(--mau-chinh);
+    text-decoration: none;
     transition: color var(--chuyen-dong-nhanh), background-color var(--chuyen-dong-nhanh), border-color var(--chuyen-dong-nhanh), transform var(--chuyen-dong-nhanh);
 }
 

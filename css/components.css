@@ -1,7 +1,3 @@
-.sanPham, .sanPham *, .input-search, .input-search * {
-    box-sizing: border-box;
-}
-
 .input-search,
 .filterName input,
 .taikhoan input,
@@ -20,17 +16,54 @@ select {
     transition: border-color var(--chuyen-dong-nhanh), box-shadow var(--chuyen-dong-nhanh), background-color var(--chuyen-dong-nhanh);
 }
 
+.input-search,
+.input-search * {
+    box-sizing: border-box;
+}
+
 .input-search {
+    position: relative;
+    width: min(420px, 100%);
     height: 44px;
-    border: 1px solid var(--mau-vien);
+    margin: 0;
+    border: 1px solid var(--mau-vien-ro);
     background: var(--mau-nen);
     overflow: visible;
 }
 
 .input-search input {
-    border-radius: var(--bo-pill) 0 0 var(--bo-pill);
+    width: calc(100% - 96px);
+    height: 100%;
+    padding: 0 var(--kc-md) 0 var(--kc-lg);
+    border: none;
+    outline: none;
     color: var(--mau-den);
     background: transparent;
+    font-size: var(--chu-body);
+}
+
+.input-search button {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 90px;
+    height: 36px;
+    min-height: 36px;
+    padding: 0 var(--kc-sm);
+    border: none;
+    border-radius: var(--bo-pill);
+    color: #ffffff;
+    background: var(--mau-chinh);
+    font-size: var(--chu-caption);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--chuyen-dong-nhanh), transform var(--chuyen-dong-nhanh);
+}
+
+.input-search button:hover,
+.input-search button:focus-visible {
+    color: #ffffff;
+    background: var(--mau-chinh-focus);
 }
 
 .filterName input {
@@ -55,10 +88,8 @@ select:focus {
     box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.14);
 }
 
-button:not(.owl-dot):not(.owl-prev):not(.owl-next),
 .button,
 .dropbtn,
-.input-search button,
 .buy_now,
 .xemTatCa,
 .taikhoan .button,
@@ -78,10 +109,8 @@ table button {
     transition: color var(--chuyen-dong-nhanh), background-color var(--chuyen-dong-nhanh), border-color var(--chuyen-dong-nhanh), transform var(--chuyen-dong-nhanh), box-shadow var(--chuyen-dong-nhanh);
 }
 
-button:not(.owl-dot):not(.owl-prev):not(.owl-next):hover,
 .button:hover,
 .dropbtn:hover,
-.input-search button:hover,
 .buy_now:hover,
 .xemTatCa:hover,
 .taikhoan .button:hover,
@@ -93,13 +122,21 @@ table button:hover {
     background: var(--mau-chinh-focus);
 }
 
-.input-search button {
-    height: 100%;
-    border-radius: 0 var(--bo-pill) var(--bo-pill) 0;
+.dropdown {
+    position: relative;
+    margin: 10px var(--kc-xxs);
 }
 
 .dropbtn {
     padding: 10px 18px;
+}
+
+.dropbtn:after {
+    content: ' \25B7';
+}
+
+.dropdown:hover .dropbtn:after {
+    content: ' \25BD';
 }
 
 .dropdown:hover .dropbtn {
@@ -107,14 +144,32 @@ table button:hover {
 }
 
 .dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 20;
+    min-width: 170px;
     border: 1px solid var(--mau-vien);
     border-radius: var(--bo-lg);
-    background-color: rgba(255, 255, 255, 0.92);
+    background-color: rgba(255, 255, 255, 0.94);
     box-shadow: var(--bong-noi-nhe);
     backdrop-filter: saturate(180%) blur(20px);
+    transform: scaleY(0);
+    transform-origin: top;
+    opacity: 0;
+    transition: transform var(--chuyen-dong-nhanh), opacity var(--chuyen-dong-nhanh);
+}
+
+.dropdown:hover .dropdown-content {
+    transform: scaleY(1);
+    opacity: 1;
 }
 
 .dropdown-content a {
+    display: block;
+    margin: 4px;
+    padding: 12px 16px;
+    border-radius: var(--bo-md);
     color: var(--mau-den);
 }
 
@@ -128,14 +183,27 @@ table button:hover {
     background: var(--mau-chinh);
 }
 
+.homeproduct {
+    list-style-type: none;
+    gap: var(--kc-lg);
+    padding: 0;
+    margin: 0;
+}
+
+.sanPham,
+.sanPham * {
+    box-sizing: border-box;
+}
+
 .sanPham {
-    width: 220px;
-    margin: var(--kc-sm);
+    position: relative;
+    width: 238px;
+    min-height: 430px;
+    margin: 10px;
     border: 1px solid var(--mau-vien);
     border-radius: var(--bo-lg);
     background: var(--mau-nen);
-    overflow: hidden;
-    box-shadow: none;
+    overflow: visible;
     transition: border-color var(--chuyen-dong-vua), transform var(--chuyen-dong-vua), box-shadow var(--chuyen-dong-vua);
 }
 
@@ -146,35 +214,55 @@ table button:hover {
 }
 
 .sanPham a {
-    height: 380px;
-    padding: var(--kc-lg);
+    display: block;
+    position: relative;
+    min-height: 430px;
+    padding: var(--kc-lg) var(--kc-md) 72px;
+    color: var(--mau-den);
+    text-decoration: none;
 }
 
 .sanPham a img {
+    display: block;
     width: 190px;
     height: 190px;
+    margin: 0 auto var(--kc-lg);
     object-fit: contain;
     filter: drop-shadow(3px 5px 18px rgba(0, 0, 0, 0.18));
+    transition: transform var(--chuyen-dong-vua);
 }
 
 .sanPham a:hover > img {
-    margin: 15px auto;
+    transform: translateY(-4px);
 }
 
 .sanPham h3 {
+    display: -webkit-box;
+    min-height: 44px;
+    margin: 0 0 var(--kc-sm);
+    overflow: hidden;
     color: var(--mau-den);
     font-size: var(--chu-body);
     font-weight: 600;
-    line-height: 1.24;
+    line-height: 1.3;
     letter-spacing: -0.01em;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .sanPham a:hover h3 {
     color: var(--mau-chinh);
 }
 
+.sanPham .price {
+    display: block;
+    min-height: 28px;
+    margin-bottom: var(--kc-xs);
+}
+
 .sanPham strong,
 .area_price strong {
+    display: inline-block;
     color: var(--mau-den);
     font-size: var(--chu-body);
     font-weight: 600;
@@ -186,43 +274,162 @@ table button:hover {
     color: var(--mau-chu-phu);
 }
 
-.sanPham label {
-    border-radius: var(--bo-pill);
-    padding: 3px 9px;
-    font-size: var(--chu-nho);
-    top: 205px;
+.sanPham a .price span {
+    margin-left: 5px;
+    text-decoration: line-through;
 }
 
-button.themvaogio {
+.sanPham .ratingresult {
+    min-height: 26px;
+    color: #fa5400;
+    white-space: nowrap;
+}
+
+.sanPham .ratingresult span {
+    display: inline-block;
+    margin-left: 4px;
+    vertical-align: middle;
+    font-size: var(--chu-caption);
+}
+
+.fa-star,
+.fa-star-o {
+    color: #fa5400;
+}
+
+.sanPham label {
+    display: inline-flex;
+    position: absolute;
+    left: var(--kc-md);
+    bottom: var(--kc-md);
+    align-items: center;
+    height: 24px;
+    max-width: 145px;
+    padding: 3px 9px;
+    border-radius: var(--bo-pill);
+    color: #ffffff;
+    font-size: var(--chu-nho);
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 2;
+}
+
+.sanPham label.giamgia {
+    background-image: linear-gradient(90deg, #ff9c00, #ec1f1f);
+}
+
+.sanPham label.tragop {
+    background: #f28902;
+}
+
+.sanPham label.giareonline {
+    background: #3fb846;
+}
+
+.sanPham label.moiramat {
+    background: #1191f8;
+}
+
+.fa-bolt {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    margin-right: 3px;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50%;
+    background: #f21;
+    color: white;
+}
+
+.tooltip {
+    position: absolute;
+    right: var(--kc-md);
+    bottom: var(--kc-md);
+    z-index: 3;
+}
+
+.themvaogio {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 44px;
     height: 44px;
     min-height: 44px;
     border: 1px solid var(--mau-vien);
     border-radius: var(--bo-pill);
-    color: var(--mau-den);
-    background: var(--mau-nen-ngoc);
-}
-
-button.themvaogio:hover {
     color: #ffffff;
     background: var(--mau-chinh);
-    box-shadow: none;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color var(--chuyen-dong-nhanh), transform var(--chuyen-dong-nhanh), box-shadow var(--chuyen-dong-nhanh);
+}
+
+.themvaogio:hover {
+    color: #ffffff;
+    background: var(--mau-chinh-focus);
+    box-shadow: var(--bong-noi-nhe);
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 96px;
+    background-color: var(--mau-den);
+    color: #fff;
+    text-align: center;
+    border-radius: var(--bo-xs);
+    padding: var(--kc-xxs) var(--kc-xs);
+    position: absolute;
+    z-index: 21;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -48px;
+    opacity: 0;
+    font-size: var(--chu-nho);
+    transition: opacity var(--chuyen-dong-nhanh);
+    pointer-events: none;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--mau-den) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }
 
 .khungSanPham {
     border: 1px solid var(--mau-vien);
     border-radius: var(--bo-lg);
     background: var(--mau-nen-phu);
-    overflow: hidden;
+    overflow: visible;
 }
 
 .khungSanPham h3.tenKhung {
-    padding: var(--kc-xs) var(--kc-lg);
+    padding: var(--kc-sm) var(--kc-lg);
     border-radius: var(--bo-pill);
-    background: var(--mau-den);
+    color: var(--mau-den);
+    background: var(--mau-nen) !important;
 }
 
 .xemTatCa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    margin: var(--kc-lg) auto 0;
+    padding: 8px 16px;
     color: #ffffff;
     background: var(--mau-chinh);
 }
@@ -268,4 +475,419 @@ button.themvaogio:hover {
 
 .xoaHet {
     background: var(--mau-den);
+}
+
+.tools-member a {
+    position: relative;
+    padding: 5px 0;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--mau-den);
+    cursor: pointer;
+}
+
+.tools-member a:hover > i {
+    background-color: var(--mau-chinh);
+    color: #ffffff;
+    border-color: var(--mau-chinh);
+}
+
+.tools-member i {
+    padding: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--mau-vien-ro);
+    background-color: var(--mau-nen);
+    color: var(--mau-den);
+    transition: background-color var(--chuyen-dong-nhanh), color var(--chuyen-dong-nhanh), border-color var(--chuyen-dong-nhanh);
+}
+
+.tools-member .fa-user {
+    padding: 10px 12.5px;
+}
+
+.tools-member .fa-shopping-cart {
+    padding: 10px 11px;
+}
+
+.member {
+    position: relative;
+}
+
+.member:hover > .menuMember {
+    z-index: 100;
+    transform: translateX(-40%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.member .menuMember {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    text-align: center;
+    border-radius: var(--bo-md);
+    background-color: var(--mau-nen);
+    border: 1px solid var(--mau-vien);
+    box-shadow: var(--bong-noi-nhe);
+    min-width: 170px;
+    transition: transform var(--chuyen-dong-nhanh), opacity var(--chuyen-dong-nhanh), visibility var(--chuyen-dong-nhanh);
+    transform: translateX(-40%) scale(0.9);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.member .menuMember a {
+    display: block;
+    padding: 10px 0;
+    color: var(--mau-den);
+    font-size: var(--chu-caption);
+    font-weight: 500;
+}
+
+.member .menuMember a:hover {
+    background-color: var(--mau-nen-phu);
+    color: var(--mau-chinh);
+}
+
+.member .hide {
+    display: none;
+}
+
+.cart {
+    position: relative;
+    margin: 0 15px;
+    padding-left: 5px;
+}
+
+.cart-number {
+    position: absolute;
+    left: 1.4em;
+    bottom: -0.6em;
+    font-weight: 700;
+    font-size: 11px;
+    color: #ffffff;
+    background-color: var(--mau-canh-bao);
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+}
+
+.autocomplete {
+    position: relative;
+    height: 100%;
+}
+
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-md);
+    box-shadow: var(--bong-noi-nhe);
+    background-color: var(--mau-nen);
+    z-index: 99;
+    top: 105%;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.autocomplete-items div {
+    padding: 10px var(--kc-md);
+    cursor: pointer;
+    color: var(--mau-den);
+    background-color: var(--mau-nen);
+    border-bottom: 1px solid var(--mau-vien);
+    font-size: var(--chu-caption);
+}
+
+.autocomplete-items div:last-child {
+    border-bottom: none;
+}
+
+.autocomplete-items div:hover {
+    background-color: var(--mau-nen-phu);
+    color: var(--mau-chinh);
+}
+
+.autocomplete-active {
+    background-color: var(--mau-chinh) !important;
+    color: #ffffff !important;
+}
+
+.tags {
+    margin: 5px 0 0 20px;
+    font-size: 13px;
+}
+
+.tags strong {
+    color: var(--mau-den);
+    font-weight: 600;
+}
+
+.tags a {
+    color: var(--mau-chu-phu);
+    padding: 0 5px;
+    font-size: 12px;
+    text-decoration: none;
+    transition: color var(--chuyen-dong-nhanh);
+}
+
+.tags a:hover {
+    color: var(--mau-chinh);
+    text-decoration: underline;
+}
+
+.containTaikhoan {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    z-index: 1000;
+    background: rgba(29, 29, 31, 0.4);
+    backdrop-filter: saturate(180%) blur(20px);
+    transition: transform var(--chuyen-dong-vua);
+    transform: scale(0);
+}
+
+.containTaikhoan .close {
+    position: fixed;
+    top: var(--kc-md);
+    right: var(--kc-md);
+    z-index: 1002;
+    font-size: var(--chu-lead);
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    color: var(--mau-chu-phu);
+    cursor: pointer;
+    border-radius: var(--bo-pill);
+    background: rgba(29, 29, 31, 0.04);
+    transition: background-color var(--chuyen-dong-nhanh), color var(--chuyen-dong-nhanh);
+}
+
+.containTaikhoan .close:hover {
+    color: var(--mau-den);
+    background-color: rgba(29, 29, 31, 0.08);
+}
+
+.taikhoan {
+    position: relative;
+    z-index: 1001;
+    background: var(--mau-nen);
+    border: 1px solid var(--mau-vien);
+    box-shadow: var(--bong-noi-nhe);
+    border-radius: var(--bo-lg);
+    padding: 40px;
+    max-width: 600px;
+    margin: 30px auto;
+    color: var(--mau-den);
+}
+
+.taikhoan,
+.taikhoan * {
+    box-sizing: border-box;
+}
+
+.taikhoan a {
+    color: var(--mau-chinh);
+}
+
+.taikhoan a:hover {
+    color: var(--mau-chinh-focus);
+}
+
+.tab-group {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px 0;
+}
+
+.tab-group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.tab-group li a {
+    display: block;
+    padding: 15px;
+    background: var(--mau-nen-phu);
+    color: var(--mau-chu-phu);
+    font-size: 20px;
+    float: left;
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color var(--chuyen-dong-nhanh), color var(--chuyen-dong-nhanh);
+}
+
+.tab-group li a:hover {
+    background: var(--mau-chinh-focus);
+    color: #ffffff;
+}
+
+.tab-group .active a {
+    background: var(--mau-chinh);
+    color: #ffffff;
+}
+
+.tab-content > div {
+    display: block;
+}
+
+.tab-content > div:last-child {
+    display: none;
+}
+
+.taikhoan h1 {
+    text-align: center;
+    color: var(--mau-den);
+    font-weight: 600;
+    margin: 0 0 40px;
+}
+
+.taikhoan label {
+    position: absolute;
+    transform: translateY(6px);
+    left: 13px;
+    color: var(--mau-chu-mo);
+    transition: all 0.25s ease;
+    backface-visibility: hidden;
+    pointer-events: none;
+    font-size: 22px;
+}
+
+.taikhoan label .req {
+    margin: 2px;
+    color: var(--mau-chinh);
+}
+
+.taikhoan label.active {
+    transform: translateY(-25px);
+    left: 2px;
+    font-size: 17px;
+}
+
+.taikhoan label.active .req {
+    opacity: 0;
+}
+
+.taikhoan label.highlight {
+    color: var(--mau-den);
+}
+
+.taikhoan input,
+.taikhoan textarea {
+    font-size: 22px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px;
+    background: none;
+    background-image: none;
+    border: 1px solid var(--mau-vien-ro);
+    color: var(--mau-den);
+    border-radius: 0;
+    transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+.taikhoan input:focus,
+.taikhoan textarea:focus {
+    outline: 0;
+    border-color: var(--mau-chinh);
+    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.14);
+}
+
+.taikhoan textarea {
+    border: 2px solid var(--mau-vien-ro);
+    resize: vertical;
+}
+
+.field-wrap {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.top-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.top-row > div {
+    float: left;
+    width: 48%;
+    margin-right: 4%;
+}
+
+.top-row > div:last-child {
+    margin: 0;
+}
+
+.taikhoan .button {
+    border: 0;
+    outline: none;
+    border-radius: var(--bo-pill);
+    padding: 15px 0;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    background: var(--mau-chinh);
+    color: #ffffff;
+    transition: background-color var(--chuyen-dong-nhanh);
+    cursor: pointer;
+}
+
+.taikhoan .button:hover,
+.taikhoan .button:focus {
+    background: var(--mau-chinh-focus);
+}
+
+.taikhoan .button-block {
+    display: block;
+    width: 100%;
+}
+
+.taikhoan .forgot {
+    margin-top: -20px;
+    text-align: right;
+}
+
+#khongCoSanPham {
+    opacity: 0;
+    width: 0;
+    color: var(--mau-canh-bao);
+    font-size: 30px;
+    font-weight: bold;
+    height: 310px;
+}
+
+.pagination {
+    clear: both;
+    position: relative;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.pagination a {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: var(--bo-pill);
+    color: var(--mau-chu-phu);
+    transition: background-color var(--chuyen-dong-nhanh), color var(--chuyen-dong-nhanh);
+}
+
+.pagination a:hover:not(.current) {
+    background-color: var(--mau-nen-phu);
+    color: var(--mau-den);
+}
+
+.pagination .current {
+    color: #ffffff;
+    background: var(--mau-chinh);
 }

@@ -68,16 +68,206 @@
     font-size: var(--chu-body);
 }
 
-.info_product h2 {
-    color: var(--mau-den);
-}
-
-.info_product .info li {
-    border-color: var(--mau-vien);
-}
-
 @media (max-width: 900px) {
     .rowdetail {
         grid-template-columns: 1fr;
     }
+}
+
+.ship {
+    background-color: #ecf7ed;
+    border-radius: var(--bo-md);
+    border: 1px solid #c4ddc8;
+    margin: var(--kc-sm) var(--kc-lg) var(--kc-md);
+    padding: var(--kc-sm) var(--kc-md);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: var(--kc-sm);
+}
+
+.ship img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+
+.ship div {
+    border-left: 1px solid #c4ddc8;
+    padding-left: var(--kc-sm);
+    color: #30a43b;
+    font-size: var(--chu-caption);
+}
+
+.area_promo {
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-lg);
+    background: var(--mau-nen-ngoc);
+    margin: var(--kc-sm) var(--kc-lg) var(--kc-md);
+    padding: var(--kc-md);
+}
+
+.area_promo strong {
+    display: block;
+    font-size: var(--chu-caption);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--mau-den);
+    margin-bottom: var(--kc-xs);
+}
+
+.area_promo .promo {
+    display: flex;
+    align-items: center;
+    gap: var(--kc-xs);
+    font-size: var(--chu-caption);
+    color: var(--mau-chu-phu);
+}
+
+.promo img {
+    width: 14px;
+    height: 14px;
+}
+
+.policy {
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-lg);
+    background: var(--mau-nen);
+    margin: var(--kc-sm) var(--kc-lg) var(--kc-md);
+    padding: var(--kc-sm) 0;
+}
+
+.policy div {
+    display: flex;
+    align-items: center;
+    gap: var(--kc-sm);
+    padding: var(--kc-sm) var(--kc-md);
+    border-bottom: 1px solid var(--mau-vien);
+}
+
+.policy div.last {
+    border-bottom: none;
+}
+
+.policy div img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.policy div p {
+    font-size: var(--chu-caption);
+    color: var(--mau-chu-phu);
+    margin: 0;
+}
+
+.info_product h2 {
+    font-size: var(--chu-tagline);
+    font-weight: 600;
+    padding: var(--kc-md);
+    border-bottom: 1px solid var(--mau-vien);
+    text-align: center;
+}
+
+.info {
+    padding: 0 var(--kc-md);
+    margin: 0;
+}
+
+.info li {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--kc-sm) 0;
+    border-bottom: 1px solid var(--mau-vien);
+    font-size: var(--chu-caption);
+}
+
+.info li:last-child {
+    border-bottom: none;
+}
+
+.info li p {
+    color: var(--mau-chu-mo);
+    margin: 0;
+    width: 40%;
+}
+
+.info li div {
+    color: var(--mau-den);
+    width: 60%;
+    font-weight: 500;
+}
+
+.overlaycertainimg {
+    z-index: 1005;
+    position: fixed;
+    inset: 0;
+    background: rgba(29, 29, 31, 0.96);
+    backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0);
+    transition: transform var(--chuyen-dong-vua);
+}
+
+.overlaycertainimg .close {
+    position: absolute;
+    top: var(--kc-lg);
+    right: var(--kc-lg);
+    font-size: var(--chu-lead);
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: var(--bo-pill);
+    background: rgba(255, 255, 255, 0.1);
+    transition: background-color var(--chuyen-dong-nhanh);
+}
+
+.overlaycertainimg .close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.overlaycertainimg-content {
+    width: 100%;
+    max-width: 800px;
+    padding: var(--kc-xl);
+    text-align: center;
+}
+
+.overlaycertainimg-content img.bigimg {
+    max-height: 500px;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: var(--bo-lg);
+    background: #ffffff;
+    padding: var(--kc-lg);
+    box-shadow: var(--bong-san-pham);
+}
+
+.div_smallimg {
+    margin-top: var(--kc-lg);
+    display: flex;
+    justify-content: center;
+    gap: var(--kc-sm);
+}
+
+.div_smallimg img {
+    width: 80px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: var(--bo-sm);
+    border: 2px solid transparent;
+    cursor: pointer;
+    background: #ffffff;
+    transition: border-color var(--chuyen-dong-nhanh), transform var(--chuyen-dong-nhanh);
+}
+
+.div_smallimg img:hover,
+.div_smallimg img.active {
+    border-color: var(--mau-chinh);
+    transform: scale(1.05);
 }

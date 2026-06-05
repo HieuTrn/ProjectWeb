@@ -830,6 +830,7 @@ function swap(arr, i, j) {
 // ================= các hàm thêm ====================
 // Chuyển khuyến mãi vễ dạng chuỗi tiếng việt
 function promoToStringValue(pr) {
+    if (!pr) return '';
     switch (pr.name) {
         case 'tragop':
             return 'Góp ' + pr.value + '%';

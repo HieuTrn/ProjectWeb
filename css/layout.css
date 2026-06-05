@@ -1,5 +1,32 @@
+.flexContain {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.group:before,
+.group:after {
+    content: "";
+    display: table;
+}
+
+.group:after {
+    clear: both;
+}
+
+.group {
+    zoom: 1;
+}
+
+.clear {
+    clear: both;
+    line-height: 0;
+}
+
 section {
     max-width: 1205px;
+    margin: 0 auto;
 }
 
 body {
@@ -41,7 +68,7 @@ body {
 
 .global-nav a:hover,
 .global-nav a:focus-visible {
-    color: #ffffff;
+    color: var(--mau-chinh-dark);
 }
 
 .global-nav .nav-logo {
@@ -49,6 +76,7 @@ body {
 }
 
 .sub-nav-frosted {
+    position: sticky;
     top: var(--cao-nav);
     z-index: 24;
     min-height: 64px;
@@ -56,6 +84,9 @@ body {
     border-bottom: 1px solid var(--mau-vien);
     background: rgba(245, 245, 247, 0.82);
     backdrop-filter: saturate(180%) blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .sub-nav-frosted .logo {
@@ -69,6 +100,7 @@ body {
     align-items: center;
     min-height: 44px;
     color: var(--mau-den);
+    text-decoration: none;
 }
 
 .sub-nav-frosted .logo span {
@@ -192,6 +224,8 @@ body {
 
     .sub-nav-frosted {
         top: 0;
+        flex-direction: column;
+        align-items: stretch;
     }
 
     .sub-nav-frosted .logo,
@@ -217,4 +251,47 @@ body {
     .footer-grid {
         grid-template-columns: 1fr;
     }
+
+    .plc ul {
+        flex-direction: column;
+        gap: var(--kc-sm);
+    }
+    .plc li {
+        border-right: none;
+        border-bottom: 1px solid var(--mau-vien);
+        padding: var(--kc-xs) 0;
+    }
+    .plc li:last-child {
+        border-bottom: none;
+    }
+}
+
+.plc {
+    background: var(--mau-nen);
+    border-top: 1px solid var(--mau-vien);
+    border-bottom: 1px solid var(--mau-vien);
+    padding: var(--kc-lg) 0;
+    color: var(--mau-chu-phu);
+}
+
+.plc ul {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--kc-md);
+}
+
+.plc li {
+    flex: 1;
+    font-size: var(--chu-caption);
+    line-height: 1.5;
+    text-align: center;
+    border-right: 1px solid var(--mau-vien);
+    padding: 0 var(--kc-md);
+}
+
+.plc li:last-child {
+    border-right: none;
 }

@@ -2,6 +2,10 @@ body {
     background: var(--mau-nen-phu);
 }
 
+.listSanPham {
+    overflow: visible;
+}
+
 .listSanPham th,
 .listSanPham td {
     padding: var(--kc-md);
@@ -32,6 +36,70 @@ body {
 
 .listSanPham td a:hover {
     color: var(--mau-chinh);
+}
+
+.listSanPham td {
+    border-bottom: 1px solid var(--mau-vien);
+    vertical-align: middle;
+}
+
+.listSanPham tr:not(:last-child):hover {
+    background-color: var(--mau-nen-ngoc);
+}
+
+.listSanPham tr td:first-child,
+.listSanPham tr th {
+    text-align: center;
+}
+
+.listSanPham .soluong button {
+    border: 1px solid var(--mau-vien);
+    border-radius: var(--bo-pill);
+    background-color: var(--mau-nen);
+    color: var(--mau-den);
+    cursor: pointer;
+    transition: background-color var(--chuyen-dong-nhanh);
+}
+
+.listSanPham .soluong button:hover {
+    background-color: var(--mau-nen-phu);
+}
+
+.noPadding {
+    padding: 0 0 0 10px;
+    line-height: 2.5em;
+}
+
+.alignRight {
+    text-align: right;
+    padding-right: 30px;  
+}
+
+.fa-trash {
+    color: var(--mau-chu-mo);
+    cursor: pointer;
+    font-size: var(--chu-body);
+    transition: color var(--chuyen-dong-nhanh), transform var(--chuyen-dong-nhanh);
+}
+
+.fa-trash:hover {
+    color: var(--mau-canh-bao);
+    transform: scale(1.2);
+}
+
+.imgHide img {
+    position: absolute;
+    right: -130px;
+    width: 150px;
+    height: 0;
+    border-radius: var(--bo-md);
+    box-shadow: var(--bong-noi-nhe);
+    transition: height var(--chuyen-dong-nhanh);
+    z-index: 10;
+}
+
+.imgHide a:hover img {
+    height: 150px;
 }
 
 @media (max-width: 833px) {
